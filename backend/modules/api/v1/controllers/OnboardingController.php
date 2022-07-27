@@ -11,6 +11,7 @@ use Commerce\Backend\App\Services\RestApi\RequestSanitizerTrait;
 use Commerce\Backend\App\Services\RestApi\RequestValidatorTrait;
 use Commerce\Backend\App\Services\RestApi\RestApiResponseError;
 use Commerce\Backend\App\Services\RestApi\RestApiResponseSuccess;
+use Commerce\Backend\Modules\Api\V1\Guards\OnboardingRestGuard;
 use Commerce\Backend\Modules\Api\V1\Repositories\OnboardingRepository;
 
 class OnboardingController extends BaseController {
@@ -41,60 +42,74 @@ class OnboardingController extends BaseController {
     }
 
     public function create( \WP_REST_Request $request ) {
+
+        // var_dump( $request->get_route() );
+
+        $guard = new OnboardingRestGuard();
+        $guard->check( $request );
+
+        if ( $guard->is_rejected() === true ) {
+            return RestApiResponseError::error( $guard->get_error_message(), $guard->get_error_data() );
+        };
+
+        return RestApiResponseSuccess::success( 'cuc', array( 'cuc' => 'ee' ) );
+
+        /**
         $operation = 'New onboarding';
 
+
         $expected_fields = array(
-            'fullname'           => array(
-                'required' => true,
-                'type'     => 'string',
-            ),
-            'email'              => array(
-                'required' => true,
-                'type'     => 'string',
-            ),
-            'consent_newsletter' => array(
-                'required' => false,
-                'type'     => 'boolean',
-            ),
-            'consent_privacy'    => array(
-                'required' => false,
-                'type'     => 'boolean',
-            ),
-            'consent_terms'      => array(
-                'required' => false,
-                'type'     => 'boolean',
-            ),
-            'installation_id'    => array(
-                'required' => false,
-                'type'     => 'string',
-            ),
-            'site_language'      => array(
-                'required' => false,
-                'type'     => 'string',
-            ),
-            'timezone'           => array(
-                'required' => false,
-                'type'     => 'string',
-            ),
+        'fullname'           => array(
+        'required' => true,
+        'type'     => 'string',
+        ),
+        'email'              => array(
+        'required' => true,
+        'type'     => 'string',
+        ),
+        'consent_newsletter' => array(
+        'required' => false,
+        'type'     => 'boolean',
+        ),
+        'consent_privacy'    => array(
+        'required' => false,
+        'type'     => 'boolean',
+        ),
+        'consent_terms'      => array(
+        'required' => false,
+        'type'     => 'boolean',
+        ),
+        'installation_id'    => array(
+        'required' => false,
+        'type'     => 'string',
+        ),
+        'site_language'      => array(
+        'required' => false,
+        'type'     => 'string',
+        ),
+        'timezone'           => array(
+        'required' => false,
+        'type'     => 'string',
+        ),
         );
 
         $missing_fields = RequestValidatorTrait::required_fields(
-            $expected_fields,
-            $request,
-            $operation
+        $expected_fields,
+        $request,
+        $operation
         );
 
         if ( $missing_fields !== null ) {
-            return RestApiResponseError::missing_multi_parameters( $missing_fields, $operation, $missing_fields );
+        return RestApiResponseError::missing_multi_parameters( $missing_fields, $operation, $missing_fields );
         }
 
         $new_onboarding = RequestSanitizerTrait::bulk_sanitize(
-            $expected_fields,
-            $request
+        $expected_fields,
+        $request
         );
 
         $result = $this->repository->find_by_id( $new_onboarding['installation_id'] );
-
+         */
         /**
         $result = $this->repository->insert( $new_onboarding );
 
