@@ -2,7 +2,7 @@
 
 namespace Commerce\Backend\PluginCore;
 
-use Commerce\Backend\Modules\Setup\ClockdownSetup;
+use Commerce\Backend\Modules\Setup\CommerceSetup;
 
 /**
  * Fired during plugin activation.
@@ -27,8 +27,8 @@ class Activator {
      */
     public static function activate() {
 
-        $clockdown_setup = new ClockdownSetup();
-        $clockdown_setup->install();
+        $setup = new CommerceSetup();
+        $setup->install();
 
     }
 
