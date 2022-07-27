@@ -1,0 +1,13 @@
+### Create a countdown
+POST http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding
+content-type: application/json
+
+{
+    "fullname": "John Doe",
+    "email": "john.doe@gmail.com",
+    "consent_newsletter": true,
+    "consent_terms": true,
+    "consent_privacy": true,
+    "installation_id": "123456789",
+    "locale": "en_US",
+}

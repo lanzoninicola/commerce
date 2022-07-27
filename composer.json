@@ -1,0 +1,20 @@
+{
+  "name": "lanzo/commerce",
+  "autoload": {
+    "psr-4": {
+      "Commerce\\Backend\\Modules\\Api\\V1\\": "./backend/modules/api/v1",
+      "Commerce\\Backend\\Modules\\Api\\V1\\Controllers\\": "./backend/modules/api/v1/controllers",
+      "Commerce\\Backend\\Modules\\Api\\V1\\Factories\\": "./backend/modules/api/v1/factories",
+      "Commerce\\Backend\\Modules\\Api\\V1\\Repositories\\": "./backend/modules/api/v1/repositories",
+      "Commerce\\Backend\\Modules\\Api\\V1\\Models\\": "./backend/modules/api/v1/models",
+      "Commerce\\Backend\\Modules\\Api\\V1\\Validators\\": "./backend/modules/api/v1/validators"
+    }
+  },
+  "authors": [
+    {
+      "name": "Nicola",
+      "email": "lanzoni.nicola@gmail.com"
+    }
+  ],
+  "require": {}
+}
