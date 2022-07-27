@@ -25,7 +25,7 @@ class I18n {
     public function load_plugin_textdomain() {
 
         load_plugin_textdomain(
-            CLOCKDOWN_TEXT_DOMAIN,
+            COMMERCE_TEXT_DOMAIN,
             false,
             dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
         );
