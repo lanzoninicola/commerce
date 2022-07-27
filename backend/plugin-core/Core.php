@@ -7,11 +7,8 @@ use Commerce\Backend\App\Services\RestApi\RestApiRoutes;
 use Commerce\Backend\App\Services\RestApi\RestApiRoutesService;
 use Commerce\Backend\App\Services\ScriptLocalizer\ScriptAdminLocalizerService;
 use Commerce\Backend\App\Services\ScriptLocalizer\ScriptPublicLocalizerService;
-use Commerce\Backend\Modules\Api\V1\Factories\ControllersFactory;
-use Commerce\Backend\Modules\CountdownWidget\CountdownWidgetShortcode;
-use Commerce\Backend\Modules\TemplatesEditor\TemplatesEditor;
+use Commerce\Backend\Modules\Api\V1\Controllers\OnboardingControllerFactory;
 use Commerce\Backend\PluginCore\I18n;
-use function Commerce\Backend\App\Functions\add_menu;
 
 /**
  * The core plugin class.
@@ -126,7 +123,6 @@ class Core {
      *
      */
     public function add_plugin_menu() {
-        add_menu( 'Commerce', 'clockdown' );
     }
 
     /**
@@ -152,20 +148,6 @@ class Core {
      */
     private function define_shortcodes() {
 
-        $this->shortcodes_loader->add(
-            'clockdown',
-            CountdownWidgetShortcode::class
-        );
-
-        $this->shortcodes_loader->add_localize_script(
-            'clockdown',
-            'clockdownLocalized',
-            array(
-                'apiURL'   => home_url( '/wp-json' ),
-                'language' => get_locale(),
-            )
-        );
-
     }
 
     /**
@@ -178,38 +160,6 @@ class Core {
      */
     private function define_scripts() {
 
-        $this->scripts_enqueuer->add_admin_style(
-            'templates-editor-style',
-            CLOCKDOWN_PLUGIN_BASE_URL_PATH . 'public/templates-editor/assets/index.css',
-            array(),
-            '1.0.0'
-        );
-
-        $this->scripts_enqueuer->add_admin_script(
-            'templates-editor-script',
-            CLOCKDOWN_PLUGIN_BASE_URL_PATH . 'public/templates-editor/assets/index.js',
-            array(),
-            '1.0.0',
-            false
-        );
-
-        $this->shortcodes_loader->add_inline_script(
-            'clockdown',
-            array(
-                'id'  => 'clockdown-widget-script',
-                'src' => CLOCKDOWN_PLUGIN_BASE_URL_PATH . 'public/clockdown-widget/assets/index.js',
-                'ver' => '1.0.0',
-            )
-        );
-
-        $this->shortcodes_loader->add_inline_stylesheet(
-            'clockdown',
-            array(
-                'id'   => 'clockdown-widget-style',
-                'href' => CLOCKDOWN_PLUGIN_BASE_URL_PATH . 'public/clockdown-widget/assets/index.css',
-                'ver'  => '1.0.0',
-            )
-        );
     }
 
     /**
@@ -220,13 +170,6 @@ class Core {
      * @since    1.0.0
      */
     private function define_admin_hooks() {
-
-        // Adding the plugin menu to Wordpress admin menu
-        $this->hooks_loader->add_action( 'admin_menu', $this, 'add_plugin_menu' );
-
-        // Adding the menu in the admin area for the templates editor
-        $templates = new TemplatesEditor();
-        $this->hooks_loader->add_action( 'admin_menu', $templates, 'add_menu' );
 
     }
 
@@ -269,54 +212,21 @@ class Core {
      */
     private function define_rest_api_routes() {
 
-        $countdowns_endpoint   = 'countdowns';
-        $countdown_id_endpoint = '/countdowns/(?P<id>\d+)';
-        $settings_enpoint      = '/countdowns/(?P<id>\d+)/settings';
-
-        $countdown_controller = ControllersFactory::get_instance_by_class_name( 'CountdownsController' );
-        $settings_controller  = ControllersFactory::get_instance_by_class_name( 'CountdownsSettingsController' );
+        $onboarding_endpoint   = 'onboarding';
+        $onboarding_controller = OnboardingControllerFactory::create();
 
         $endpoints_v1 = array(
-            new RestApiEndpoint( $countdowns_endpoint, 'GET',
-                array( $countdown_controller, 'find_all' ),
+            new RestApiEndpoint( $onboarding_endpoint, 'GET',
+                array( $onboarding_controller, 'find_all' ),
                 'public'
             ),
-            new RestApiEndpoint( $countdowns_endpoint, 'POST',
-                array( $countdown_controller, 'create' ),
+            new RestApiEndpoint( $onboarding_endpoint, 'POST',
+                array( $onboarding_controller, 'create' ),
                 'public'
             ),
-            new RestApiEndpoint( $countdown_id_endpoint, 'GET',
-                array( $countdown_controller, 'find_by_id' ),
-                'public'
-            ),
-            new RestApiEndpoint( $countdown_id_endpoint, 'PUT',
-                array( $countdown_controller, 'update' ),
-                'public'
-            ),
-            new RestApiEndpoint( $countdown_id_endpoint, 'DELETE',
-                array( $countdown_controller, 'delete' ),
-                'public'
-            ),
-            new RestApiEndpoint( $settings_enpoint, 'GET',
-                array( $settings_controller, 'find_by_id' ),
-                'public'
-            ),
-            new RestApiEndpoint( $settings_enpoint, 'POST',
-                array( $settings_controller, 'create' ),
-                'public'
-            ),
-            new RestApiEndpoint( $settings_enpoint, 'PUT',
-                array( $settings_controller, 'update' ),
-                'public'
-            ),
-            new RestApiEndpoint( $settings_enpoint, 'DELETE',
-                array( $settings_controller, 'delete' ),
-                'public'
-            ),
-
         );
 
-        $routes = new RestApiRoutes( 'clockdown', 'v1', $endpoints_v1 );
+        $routes = new RestApiRoutes( 'commerce', 'v1', $endpoints_v1 );
 
         $this->routes_service->add_routes( $routes );
 
@@ -347,7 +257,7 @@ class Core {
      *
      * @since     1.0.0
      *
-     * @return Clockdown_Loader Orchestrates the hooks of the plugin.
+     * @return Commerce_Loader Orchestrates the hooks of the plugin.
      */
     public function get_loader() {
         return $this->hooks_loader;
