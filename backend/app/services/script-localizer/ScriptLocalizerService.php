@@ -23,7 +23,7 @@ class ScriptLocalizerService {
      * @var string - the handle name
      * @since    1.0.0
      */
-    private $handle = CLOCKDOWN_PLUGIN_NAME . '-localizer';
+    private $handle = COMMERCE_PLUGIN_NAME . '-localizer';
 
     /**
      * This is the name of Javascript object that will be used to localize the script.
@@ -31,7 +31,7 @@ class ScriptLocalizerService {
      *
      * @var string
      */
-    private $object_name = CLOCKDOWN_PLUGIN_NAME . 'Localized';
+    private $object_name = COMMERCE_PLUGIN_NAME . 'Localized';
 
     /**
      * This is the content of the Javascript object
@@ -82,7 +82,7 @@ class ScriptLocalizerService {
             array_merge(
                 $this->l10n,
                 array(
-                    'nonce'         => wp_create_nonce( CLOCKDOWN_PLUGIN_NAME . 'nonce' ),
+                    'nonce'         => wp_create_nonce( COMMERCE_PLUGIN_NAME . 'nonce' ),
                     'wp_rest_nonce' => wp_create_nonce( 'wp_rest' ),
                 )
             )
