@@ -9,6 +9,23 @@ namespace Commerce\Backend\App\Services\Database;
 class DatabaseQuery implements DatabaseQueryInterface {
 
     /**
+     * Instance of the class.
+     *
+     * @var DatabaseQuery|null
+     */
+    public static $instance = null;
+
+    // singletone call
+    public static function singletone() {
+
+        if ( self::$instance === null ) {
+            self::$instance = new DatabaseQuery();
+        }
+
+        return self::$instance;
+    }
+
+    /**
      * Insert a row.
      *
      * Use the identity operator (===) to check for errors: (e.g., false === $result),
