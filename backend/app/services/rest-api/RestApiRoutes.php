@@ -18,7 +18,7 @@ class RestApiRoutes {
     /**
      * Collection of routes for the custom REST-API.
      *
-     * @param string $root_path The root path of api endpoint (e.g. /wp-json/clockdown)
+     * @param string $root_path The root path of api endpoint (e.g. /wp-json/{plugin-name}). Wordpress calls it "namespace".
      * @param string $api_version The API version (eg. v1, v2, v3, etc.)
      * @param array $endpoints The endpoints to be registered.
      *
