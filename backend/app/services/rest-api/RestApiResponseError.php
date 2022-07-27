@@ -23,6 +23,16 @@ class RestApiResponseError {
 
     }
 
+    public static function missing_multi_parameters( array $parameters, string $operation, $payload = null ) {
+
+        $parameters_str = implode( ', ', $parameters );
+        return self::error( "Missing parameter - Expected '$parameters_str' parameter", array(
+            'operation' => $operation,
+            'payload'   => $payload,
+        ), 400 );
+
+    }
+
     public static function invalid_parameter( string $parameter, string $operation, $payload = null ) {
 
         return self::error( "Invalid parameter - '$parameter' is not in the expected format", array(
