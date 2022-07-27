@@ -54,13 +54,13 @@ class AdminMenuService {
         'wp_icon'    => null,
     ) ) {
 
-        $page_title = $options['page_title'] ?? __( $label, CLOCKDOWN_TEXT_DOMAIN );
+        $page_title = $options['page_title'] ?? __( $label, COMMERCE_TEXT_DOMAIN );
         $capability = $options['capability'] ?? $this->default_capability;
         $icon       = $options['icon_url'] ?? $options['wp_icon'] ?? 'dashicons-admin-tools';
         $this->slug = $slug;
 
         add_menu_page(
-            __( $label, CLOCKDOWN_TEXT_DOMAIN ),
+            __( $label, COMMERCE_TEXT_DOMAIN ),
             $page_title,
             $capability,
             $slug,
@@ -76,13 +76,13 @@ class AdminMenuService {
         'position'   => null,
     ) ) {
 
-        $page_title = $options['page_title'] ?? __( $label, CLOCKDOWN_TEXT_DOMAIN );
+        $page_title = $options['page_title'] ?? __( $label, COMMERCE_TEXT_DOMAIN );
         $capability = $options['capability'] ?? $this->default_capability;
         $position   = $options['position'] ?? null;
 
         add_submenu_page(
             $parent_slug,
-            __( $label, CLOCKDOWN_TEXT_DOMAIN ),
+            __( $label, COMMERCE_TEXT_DOMAIN ),
             $page_title,
             $capability,
             $slug,
@@ -111,7 +111,7 @@ class AdminMenuService {
      *
      */
     public function remove_duplicate_submenu_page() {
-        remove_submenu_page( 'clockdown', 'clockdown' );
+        remove_submenu_page( 'commerce', 'commerce' );
     }
 
 }
