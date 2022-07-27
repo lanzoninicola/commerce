@@ -1,14 +1,14 @@
 <?php
 
-namespace Clockdown\Backend\App\Services\ScriptLocalizer;
+namespace Commerce\Backend\App\Services\ScriptLocalizer;
 
-use Clockdown\Backend\App\Common\Helpers;
+use Commerce\Backend\App\Common\Helpers;
 
 /**
  * The class responsible for localize the script.
  *
- * @package    Clockdown
- * @subpackage Clockdown/admin
+ * @package    Commerce
+ * @subpackage Commerce/admin
  *
  * @link       https://lanzoninicola.com.br
  * @since      1.0.0

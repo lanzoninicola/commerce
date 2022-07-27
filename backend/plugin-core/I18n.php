@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\PluginCore;
+namespace Commerce\Backend\PluginCore;
 
 /**
  * Define the internationalization functionality.
@@ -8,7 +8,7 @@ namespace Clockdown\Backend\PluginCore;
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @package    Clockdown
+ * @package    Commerce
  * @subpackage PluginCore\I18n
  *
  * @author     Lanzoni Nicola <lanzoni.nicola@gmail.com>

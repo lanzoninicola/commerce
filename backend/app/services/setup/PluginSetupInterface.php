@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\App\Services\Setup;
+namespace Commerce\Backend\App\Services\Setup;
 
 interface PluginSetupInterface {
 

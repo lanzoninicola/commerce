@@ -1,8 +1,8 @@
 <?php
 
-namespace Clockdown\Backend\PluginCore;
+namespace Commerce\Backend\PluginCore;
 
-use Clockdown\Backend\Modules\Setup\ClockdownSetup;
+use Commerce\Backend\Modules\Setup\ClockdownSetup;
 
 class Uninstaller {
 

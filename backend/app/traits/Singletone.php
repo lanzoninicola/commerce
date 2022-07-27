@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\App\Traits;
+namespace Commerce\Backend\App\Traits;
 
 trait Singleton {
     /**

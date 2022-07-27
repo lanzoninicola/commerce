@@ -1,12 +1,12 @@
 <?php
 
-namespace Clockdown\Backend\PluginCore;
+namespace Commerce\Backend\PluginCore;
 
 /**
  * Class to manage the registration of the shortcodes.
  *
- * @package    Clockdown
- * @subpackage Clockdown/plugin-core
+ * @package    Commerce
+ * @subpackage Commerce/plugin-core
  *
  * @method add() Add a shortcode to the list of registered shortcodes.
  * @method add_inline_script() Add the inline script tag for the shortcode.

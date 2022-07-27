@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\PluginCore;
+namespace Commerce\Backend\PluginCore;
 
 class ScriptsEnqueuer {
 

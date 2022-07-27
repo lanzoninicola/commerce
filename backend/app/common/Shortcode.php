@@ -1,14 +1,14 @@
 <?php
 
-namespace Clockdown\Backend\App\Common;
+namespace Commerce\Backend\App\Common;
 
 /**
  * This class is used to define the shortcodes used by the plugin.
  *
  * The class that extends this class must define the method `output` that will be used to render the shortcode.
  *
- * @package    Clockdown
- * @subpackage Clockdown/Backend/App/Common
+ * @package    Commerce
+ * @subpackage Commerce/Backend/App/Common
  *
  * @method add_inline_script( $inline_script = array() ) Let you add a script to the list of scripts to be enqueued.
  * @method add_inline_style( $inline_stylesheet = array() ) Let you add a style to the list of styles to be enqueued.

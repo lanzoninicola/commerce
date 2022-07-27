@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\App\Services\Database;
+namespace Commerce\Backend\App\Services\Database;
 
 /**
  * Class responsible for handling database responses.
@@ -11,7 +11,7 @@ namespace Clockdown\Backend\App\Services\Database;
  * - **PAYLOAD**: mixed  (* *optional* * payload)
  *
  * Class DatabaseResponse
- * @package Clockdown\Backend\App\Services\Database
+ * @package Commerce\Backend\App\Services\Database
  */
 class DatabaseResponse {
 

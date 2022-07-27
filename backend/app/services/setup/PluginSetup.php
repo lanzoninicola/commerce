@@ -1,8 +1,8 @@
 <?php
 
-namespace Clockdown\Backend\App\Services\Setup;
+namespace Commerce\Backend\App\Services\Setup;
 
-use Clockdown\Backend\App\Services\Database\DatabaseHelpers;
+use Commerce\Backend\App\Services\Database\DatabaseHelpers;
 
 /**
  * Class responsible for the plugin setup.

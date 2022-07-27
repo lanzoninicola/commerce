@@ -1,16 +1,16 @@
 <?php
 
-namespace Clockdown\Backend\PluginCore;
+namespace Commerce\Backend\PluginCore;
 
-use Clockdown\Backend\Modules\Setup\ClockdownSetup;
+use Commerce\Backend\Modules\Setup\ClockdownSetup;
 
 /**
  * Fired during plugin activation.
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @package    Clockdown
- * @subpackage Clockdown/includes
+ * @package    Commerce
+ * @subpackage Commerce/includes
  *
  * @author     Lanzoni Nicola <lanzoni.nicola@gmail.com>
  *

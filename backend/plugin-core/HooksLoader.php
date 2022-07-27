@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\PluginCore;
+namespace Commerce\Backend\PluginCore;
 
 /**
  * Register all actions and filters for the plugin.
@@ -9,8 +9,8 @@ namespace Clockdown\Backend\PluginCore;
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Clockdown
- * @subpackage Clockdown/includes
+ * @package    Commerce
+ * @subpackage Commerce/includes
  *
  * @author     Lanzoni Nicola <lanzoni.nicola@gmail.com>
  */

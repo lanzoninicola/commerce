@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\App\Services;
+namespace Commerce\Backend\App\Services;
 
 class AdminMenuService {
 

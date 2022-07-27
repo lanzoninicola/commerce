@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\App\Common;
+namespace Commerce\Backend\App\Common;
 
 /**
  * An helper class that let you tag your scripts with the "defer" / "async" / type="module" attribute.

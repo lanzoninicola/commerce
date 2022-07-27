@@ -1,17 +1,17 @@
 <?php
 
-namespace Clockdown\Backend\PluginCore;
+namespace Commerce\Backend\PluginCore;
 
-use Clockdown\Backend\App\Services\RestApi\RestApiEndpoint;
-use Clockdown\Backend\App\Services\RestApi\RestApiRoutes;
-use Clockdown\Backend\App\Services\RestApi\RestApiRoutesService;
-use Clockdown\Backend\App\Services\ScriptLocalizer\ScriptAdminLocalizerService;
-use Clockdown\Backend\App\Services\ScriptLocalizer\ScriptPublicLocalizerService;
-use Clockdown\Backend\Modules\Api\V1\Factories\ControllersFactory;
-use Clockdown\Backend\Modules\CountdownWidget\CountdownWidgetShortcode;
-use Clockdown\Backend\Modules\TemplatesEditor\TemplatesEditor;
-use Clockdown\Backend\PluginCore\I18n;
-use function Clockdown\Backend\App\Functions\add_menu;
+use Commerce\Backend\App\Services\RestApi\RestApiEndpoint;
+use Commerce\Backend\App\Services\RestApi\RestApiRoutes;
+use Commerce\Backend\App\Services\RestApi\RestApiRoutesService;
+use Commerce\Backend\App\Services\ScriptLocalizer\ScriptAdminLocalizerService;
+use Commerce\Backend\App\Services\ScriptLocalizer\ScriptPublicLocalizerService;
+use Commerce\Backend\Modules\Api\V1\Factories\ControllersFactory;
+use Commerce\Backend\Modules\CountdownWidget\CountdownWidgetShortcode;
+use Commerce\Backend\Modules\TemplatesEditor\TemplatesEditor;
+use Commerce\Backend\PluginCore\I18n;
+use function Commerce\Backend\App\Functions\add_menu;
 
 /**
  * The core plugin class.
@@ -22,8 +22,8 @@ use function Clockdown\Backend\App\Functions\add_menu;
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @package    Clockdown
- * @subpackage Clockdown/plugin-core
+ * @package    Commerce
+ * @subpackage Commerce/plugin-core
  *
  * @author     Lanzoni Nicola <lanzoni.nicola@gmail.com>
  *
@@ -126,7 +126,7 @@ class Core {
      *
      */
     public function add_plugin_menu() {
-        add_menu( 'Clockdown', 'clockdown' );
+        add_menu( 'Commerce', 'clockdown' );
     }
 
     /**

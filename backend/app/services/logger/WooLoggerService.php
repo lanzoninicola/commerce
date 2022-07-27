@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\App\Services\Logger;
+namespace Commerce\Backend\App\Services\Logger;
 
 class WooLoggerServive implements LoggerServiceInterface {
 

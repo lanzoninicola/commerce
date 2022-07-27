@@ -1,8 +1,8 @@
 <?php
 
-namespace Clockdown\Backend\App\Services\Database;
+namespace Commerce\Backend\App\Services\Database;
 
-use Clockdown\Backend\App\Services\Database\DatabaseResponse;
+use Commerce\Backend\App\Services\Database\DatabaseResponse;
 
 interface DatabaseQueryInterface {
 

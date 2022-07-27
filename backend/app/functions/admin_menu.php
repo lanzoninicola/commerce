@@ -1,8 +1,8 @@
 <?php
 
-namespace Clockdown\Backend\App\Functions {
+namespace Commerce\Backend\App\Functions {
 
-    use Clockdown\Backend\App\Services\AdminMenuService;
+    use Commerce\Backend\App\Services\AdminMenuService;
 
     function add_menu( string $label, string $slug, array $options = array() ) {
         $admin_menu = AdminMenuService::singletone();

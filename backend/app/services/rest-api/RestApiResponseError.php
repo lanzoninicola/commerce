@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\App\Services\RestApi;
+namespace Commerce\Backend\App\Services\RestApi;
 
 class RestApiResponseError {
 

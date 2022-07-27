@@ -1,12 +1,12 @@
 <?php
 
-namespace Clockdown\Backend\App\Services\RestApi;
+namespace Commerce\Backend\App\Services\RestApi;
 
 /**
  * The class that describe the custom REST API end-points for the countdown.
  *
- * @package    Clockdown
- * @subpackage Clockdown/admin
+ * @package    Commerce
+ * @subpackage Commerce/admin
  *
  * @link       https://lanzoninicola.com.br
  * @since      1.0.0

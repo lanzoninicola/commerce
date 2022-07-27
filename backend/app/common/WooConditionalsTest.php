@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\App\Common;
+namespace Commerce\Backend\App\Common;
 
 class WooConditionalsTest {
 

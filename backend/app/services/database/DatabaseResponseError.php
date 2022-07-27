@@ -1,6 +1,6 @@
 <?php
 
-namespace Clockdown\Backend\App\Services\Database;
+namespace Commerce\Backend\App\Services\Database;
 
 /**
  * Response for error.
