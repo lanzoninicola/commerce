@@ -2,70 +2,75 @@
 
 namespace Commerce\Backend\App\Traits;
 
+use Commerce\Backend\App\Common\Error;
+
 trait SanitizerTrait {
 
     /**
-     * Returns the array of sanitizes data.
+     * Sanitize the given array of data using the given sanitization rules.
      *
      * @param array $rules Key / value array of rules. Eg. ['name' => 'string', 'email' => 'email']. The key is the field name and the value is the type that determines how the field is sanitized.
      * @param array $data Key / value array of data. Eg. ['name' => 'John', 'email' => 'john.doe@gmail.com']
-     * @return array of sanitized strings
+     * @return Error | array of sanitized strings
      */
-    public function sanitize( array $rules, array $data ): array{
+    public function bulk_sanitize( array $rules, array $data ) {
 
         if ( empty( $rules ) ) {
-            throw new \Exception( 'No rules has been provided.' );
+            return new Error( 'no_rules', 'SanitizerTrait - sanitize() - No rules has been provided.' );
         }
 
         if ( count( $rules ) !== count( $data ) ) {
-            throw new \Exception( 'The number of rules and data must be the same.' );
+            return new Error( 'mismatching_rules', 'SanitizerTrait - sanitize() - The number of rules and data must be the same.' );
         }
 
         if ( count( array_diff_key( $rules, $data ) ) ) {
-            throw new \Exception( 'The rules and data must have the same keys.' );
+            return new Error( 'invalid_data', 'SanitizerTrait - required_fields() - The rules and data must have the same keys.' );
         }
 
         $sanitized_fields = array();
 
-        var_dump( $data );
-
         foreach ( $rules as $field => $rule_details ) {
 
-            $value_to_sanitize = $data[$field];
+            $value_to_sanitize        = $data[$field];
+            $data_type                = $rule_details['type'];
+            $sanitized_fields[$field] = $this->sanitize( $value_to_sanitize, $data_type );
 
-            var_dump( $rule_details['type'], $data[$field] );
-
-            if ( $rule_details['type'] === 'string' ) {
-                $sanitized_fields[$field] = $this->sanitize_string( $value_to_sanitize );
-            }
-
-// if ( $rule_details['type'] === 'int' ) {
-
-//     $sanitized_fields[$field] = $this->sanitize_int( $value_to_sanitize );
-
-// }
-
-// if ( $rule_details['type'] === 'bool' || $rule_details['type'] === 'boolean' ) {
-
-//     $sanitized_fields[$field] = $this->sanitize_boolean( $value_to_sanitize );
-
-// }
-
-// if ( $rule_details['type'] === 'datetime' ) {
-
-//     $sanitized_fields[$field] = $this->sanitize_datetime( $value_to_sanitize );
-
-// }
-
-// if ( $rule_details['type'] === 'email' ) {
-
-//     $sanitized_fields[$field] = sanitize_email( $value_to_sanitize );
-            // }
-
-            $sanitized_fields[$field] = $value_to_sanitize;
         }
 
         return $sanitized_fields;
+
+    }
+
+    /**
+     * Depending on the data type, sanitize the value.
+     *
+     * @param mixed $value  The value to sanitize.
+     * @param string $type The data type.
+     * @return void
+     */
+    public function sanitize( $value, string $type ) {
+
+        if ( $type === 'string' ) {
+            return $this->sanitize_string( $value );
+        } else
+
+        if ( $type === 'int' ) {
+            return $this->sanitize_int( $value );
+        } else
+
+        if ( $type === 'bool' || $type === 'boolean' ) {
+            return $this->sanitize_boolean( $value );
+        } else
+
+        if ( $type === 'datetime' ) {
+            return $this->sanitize_datetime( $value );
+        } else
+
+        if ( $type === 'email' ) {
+            return sanitize_email( $value );
+        } else {
+            return $value;
+        }
 
     }
 

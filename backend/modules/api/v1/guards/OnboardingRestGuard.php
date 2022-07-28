@@ -2,6 +2,8 @@
 
 namespace Commerce\Backend\Modules\Api\V1\Guards;
 
+use Commerce\Backend\App\Common\Error;
+use Commerce\Backend\App\Common\Helpers;
 use Commerce\Backend\App\Traits\SanitizerTrait;
 use Commerce\Backend\App\Traits\ValidatorTrait;
 
@@ -9,6 +11,20 @@ class OnboardingRestGuard {
 
     use ValidatorTrait;
     use SanitizerTrait;
+
+    /**
+     * Set to true if the guard reject the request for validation errors.
+     *
+     * @var boolean
+     */
+    private bool $reject = false;
+
+    /**
+     * Store the Error object if some error occurs.
+     *
+     * @var Error
+     */
+    private Error $error;
 
     /**
      * Validation rules and sanitization info of the request parameters.
@@ -23,7 +39,7 @@ class OnboardingRestGuard {
             ),
             'email'              => array(
                 'required' => true,
-                'type'     => 'string',
+                'type'     => 'email',
             ),
             'consent_newsletter' => array(
                 'required' => false,
@@ -58,45 +74,40 @@ class OnboardingRestGuard {
      * The request is then sanitized against the rules.
      *
      * @param \WP_REST_Request $request
-     * @return void | array of data sanitized
+     * @return array of data sanitized
      */
     public function check( \WP_REST_Request $request ) {
 
         $route_rules   = $this->rules[$request->get_route()];
         $data_to_check = $request->get_params();
 
-// try {
+        $this->sanitize_data( $route_rules, $data_to_check );
 
-//     $this->required_fields( $route_rules, $data_to_check );
-
-// } catch ( \Exception $e ) {
-
-//     $this->reject = true;
-
-//     $this->error_code    = null;
-
-//     $this->error_message = $e->getMessage();
-
-// }
-
-        $validation_result = $this->required_fields( $route_rules, $data_to_check );
-
-        if ( is_wp_error( $validation_result ) ) {
-
-            $this->reject        = true;
-            $this->error_code    = $validation_result->get_error_code();
-            $this->error_message = $validation_result->get_error_message();
-            $this->error_data    = $validation_result->get_error_data() ?? array();
-        }
-
-// $this->validate_data( $route_rules, $data_to_check );
-
-        // return $this->sanitize_data( $route_rules, $data_to_check );
+        $this->validate_data( $route_rules, $this->sanitized_data );
 
     }
 
     /**
-     * Returns the sanitized data.
+     * Validation process.
+     * Register the error if the request is invalid.
+     *
+     * @return void
+     */
+    private function validate_data( $route_rules, $data_to_check ) {
+
+        $validation_result = $this->required_fields( $route_rules, $data_to_check );
+
+        if ( Helpers::is_error( $validation_result ) ) {
+
+            $this->reject = true;
+            $this->error  = $validation_result;
+        }
+
+    }
+
+    /**
+     * Sanitization process.
+     * Register the error if the request is invalid.
      *
      * @param array $rules
      * @param array $data
@@ -104,10 +115,29 @@ class OnboardingRestGuard {
      */
     private function sanitize_data( array $rules, array $data ) {
 
-        return $this->sanitize(
+        $sanitized_data = $this->bulk_sanitize(
             $rules,
             $data
         );
+
+        if ( Helpers::is_error( $sanitized_data ) ) {
+
+            $this->reject = true;
+            $this->error  = $sanitized_data;
+        }
+
+        $this->sanitized_data = $sanitized_data;
+
+    }
+
+    /**
+     * Returns the sanitized data.
+     *
+     * @return array
+     */
+    public function get_sanitized_data() {
+
+        return $this->sanitized_data;
     }
 
     /**
@@ -128,33 +158,14 @@ class OnboardingRestGuard {
     }
 
     /**
-     * Returns the error message.
+     * Returns the error object.
      *
-     * @return string containing the error message.
+     * @return Error
      */
-    public function get_error_code(): string {
+    public function get_error(): Error {
 
-        return $this->error_code;
-    }
+        return $this->error;
 
-    /**
-     * Returns the error message.
-     *
-     * @return string containing the error message.
-     */
-    public function get_error_message(): string {
-
-        return $this->error_message;
-    }
-
-    /**
-     * Returns the error data.
-     *
-     * @return array containing the error data.
-     */
-    public function get_error_data(): array{
-
-        return $this->error_data;
     }
 
 }

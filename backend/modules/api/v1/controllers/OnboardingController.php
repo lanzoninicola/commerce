@@ -49,8 +49,12 @@ class OnboardingController extends BaseController {
         $guard->check( $request );
 
         if ( $guard->is_rejected() === true ) {
-            return RestApiResponseError::error( $guard->get_error_message(), $guard->get_error_data() );
+            return RestApiResponseError::error( $guard->get_error()->message(), $guard->get_error()->data() );
         };
+
+        $data = $guard->get_sanitized_data();
+
+        var_dump( $data );
 
         return RestApiResponseSuccess::success( 'cuc', array( 'cuc' => 'ee' ) );
 
