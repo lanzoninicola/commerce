@@ -6,10 +6,22 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Commerce\\Backend\\Modules\\Api\\V1\\Validators\\' => array($baseDir . '/backend/modules/api/v1/validators'),
+    'Commerce\\Backend\\PluginCore\\' => array($baseDir . '/backend/plugin-core'),
+    'Commerce\\Backend\\Modules\\Setup\\' => array($baseDir . '/backend/modules/setup'),
     'Commerce\\Backend\\Modules\\Api\\V1\\Repositories\\' => array($baseDir . '/backend/modules/api/v1/repositories'),
     'Commerce\\Backend\\Modules\\Api\\V1\\Models\\' => array($baseDir . '/backend/modules/api/v1/models'),
+    'Commerce\\Backend\\Modules\\Api\\V1\\Guards\\' => array($baseDir . '/backend/modules/api/v1/guards'),
     'Commerce\\Backend\\Modules\\Api\\V1\\Factories\\' => array($baseDir . '/backend/modules/api/v1/factories'),
     'Commerce\\Backend\\Modules\\Api\\V1\\Controllers\\' => array($baseDir . '/backend/modules/api/v1/controllers'),
     'Commerce\\Backend\\Modules\\Api\\V1\\' => array($baseDir . '/backend/modules/api/v1'),
+    'Commerce\\Backend\\App\\Traits\\' => array($baseDir . '/backend/app/traits'),
+    'Commerce\\Backend\\App\\Services\\Setup\\' => array($baseDir . '/backend/app/services/setup'),
+    'Commerce\\Backend\\App\\Services\\ScriptLocalizer\\' => array($baseDir . '/backend/app/services/script-localizer'),
+    'Commerce\\Backend\\App\\Services\\RestApi\\' => array($baseDir . '/backend/app/services/rest-api'),
+    'Commerce\\Backend\\App\\Services\\Logger\\' => array($baseDir . '/backend/app/services/logger'),
+    'Commerce\\Backend\\App\\Services\\Database\\' => array($baseDir . '/backend/app/services/database'),
+    'Commerce\\Backend\\App\\Services\\' => array($baseDir . '/backend/app/services'),
+    'Commerce\\Backend\\App\\Interfaces\\' => array($baseDir . '/backend/app/interfaces'),
+    'Commerce\\Backend\\App\\Common\\' => array($baseDir . '/backend/app/common'),
+    'Commerce\\' => array($baseDir . '/'),
 );

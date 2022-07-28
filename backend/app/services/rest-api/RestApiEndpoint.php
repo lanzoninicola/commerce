@@ -13,24 +13,24 @@ class RestApiEndpoint {
      * @param string $verb The verb of the endpoint.
      * @param string $callback The callback of the endpoint.
      * @param string $capability The capability of the endpoint.
-     * @param string $guard_class The name of class for validationa and sanitization.
+     * @param string $guard_object The instance of the RestApiEndpointGuard class for validationa and sanitization.
      */
-    public function __construct( string $url, string $verb, array $callback, string $capability, object $guard_class ) {
+    public function __construct( string $url, string $verb, array $callback, string $capability, RestApiEndpointGuard $guard_object ) {
 
         if ( !in_array( $verb, $this->verbs ) ) {
             throw new \Exception( 'Invalid verb.' );
 
         }
 
-        if ( empty( $guard_class ) ) {
+        if ( empty( $guard_object ) ) {
             throw new \Exception( 'Guard not set.' );
         }
 
-        $this->url         = $url;
-        $this->verb        = $verb;
-        $this->callback    = $callback;
-        $this->capability  = $capability;
-        $this->guard_class = $guard_class;
+        $this->url          = $url;
+        $this->verb         = $verb;
+        $this->callback     = $callback;
+        $this->capability   = $capability;
+        $this->guard_object = $guard_object;
 
     }
 
@@ -77,8 +77,8 @@ class RestApiEndpoint {
      *
      * @return object
      */
-    public function guard_class(): object {
-        return $this->guard_class;
+    public function guard_object(): object {
+        return $this->guard_object;
     }
 
 }

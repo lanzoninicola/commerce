@@ -3,6 +3,7 @@
 namespace Commerce\Backend\PluginCore;
 
 use Commerce\Backend\App\Services\RestApi\RestApiEndpoint;
+use Commerce\Backend\App\Services\RestApi\RestApiEndpointGuard;
 use Commerce\Backend\App\Services\RestApi\RestApiRoutes;
 use Commerce\Backend\App\Services\RestApi\RestApiRoutesService;
 use Commerce\Backend\App\Services\ScriptLocalizer\ScriptAdminLocalizerService;
@@ -218,11 +219,56 @@ class Core {
         $endpoints_v1 = array(
             new RestApiEndpoint( $onboarding_endpoint, 'GET',
                 array( $onboarding_controller, 'find_all' ),
-                'public'
+                'public',
+                new RestApiEndpointGuard()
             ),
             new RestApiEndpoint( $onboarding_endpoint, 'POST',
                 array( $onboarding_controller, 'create' ),
-                'public'
+                'public',
+                new RestApiEndpointGuard( array(
+                    'fullname'           => array(
+                        'required' => true,
+                        'type'     => 'string',
+                    ),
+                    'email'              => array(
+                        'required' => true,
+                        'type'     => 'string:email',
+                    ),
+                    'consent_newsletter' => array(
+                        'required' => true,
+                        'type'     => 'boolean',
+                    ),
+                    'consent_privacy'    => array(
+                        'required' => true,
+                        'type'     => 'boolean',
+                    ),
+                    'consent_terms'      => array(
+                        'required' => true,
+                        'type'     => 'boolean',
+                    ),
+                    'installation_id'    => array(
+                        'required' => true,
+                        'type'     => 'number',
+                    ),
+                    'site_language'      => array(
+                        'required' => false,
+                        'type'     => 'string',
+                    ),
+                    'timezone'           => array(
+                        'required' => false,
+                        'type'     => 'string',
+                    ),
+                ) )
+            ),
+            new RestApiEndpoint( 'onboarding/(?P<id>\d+)', 'POST',
+                array( $onboarding_controller, 'update' ),
+                'public',
+                new RestApiEndpointGuard( array(
+                    'id' => array(
+                        'required' => true,
+                        'type'     => 'number',
+                    ),
+                ) )
             ),
         );
 

@@ -2,12 +2,24 @@
   "name": "lanzo/commerce",
   "autoload": {
     "psr-4": {
+      "Commerce\\": "./",
+      "Commerce\\Backend\\PluginCore\\": "./backend/plugin-core",
+      "Commerce\\Backend\\App\\Interfaces\\": "./backend/app/interfaces",
+      "Commerce\\Backend\\App\\Services\\": "./backend/app/services",
+      "Commerce\\Backend\\App\\Services\\Database\\": "./backend/app/services/database",
+      "Commerce\\Backend\\App\\Services\\Setup\\": "./backend/app/services/setup",
+      "Commerce\\Backend\\App\\Services\\RestApi\\": "./backend/app/services/rest-api",
+      "Commerce\\Backend\\App\\Services\\ScriptLocalizer\\": "./backend/app/services/script-localizer",
+      "Commerce\\Backend\\App\\Services\\Logger\\": "./backend/app/services/logger",
+      "Commerce\\Backend\\App\\Traits\\": "./backend/app/traits",
+      "Commerce\\Backend\\App\\Common\\": "./backend/app/common",
+      "Commerce\\Backend\\Modules\\Setup\\": "./backend/modules/setup",
       "Commerce\\Backend\\Modules\\Api\\V1\\": "./backend/modules/api/v1",
       "Commerce\\Backend\\Modules\\Api\\V1\\Controllers\\": "./backend/modules/api/v1/controllers",
       "Commerce\\Backend\\Modules\\Api\\V1\\Factories\\": "./backend/modules/api/v1/factories",
       "Commerce\\Backend\\Modules\\Api\\V1\\Repositories\\": "./backend/modules/api/v1/repositories",
       "Commerce\\Backend\\Modules\\Api\\V1\\Models\\": "./backend/modules/api/v1/models",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Validators\\": "./backend/modules/api/v1/validators"
+      "Commerce\\Backend\\Modules\\Api\\V1\\Guards\\": "./backend/modules/api/v1/guards"
     }
   },
   "authors": [

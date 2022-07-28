@@ -4,31 +4,39 @@ namespace Commerce\Backend\App\Services\RestApi;
 
 use Commerce\Backend\App\Traits\SanitizerTrait;
 
-class BaseRestApiEndpointGuard implements RestApiEndpointGuardInterface {
+class RestApiEndpointGuard implements RestApiEndpointGuardInterface {
 
     use SanitizerTrait;
 
     /**
-     * Array of arguments and validation/sanitization rule for each endpoint.
-     *
-     * array( $route => array( $arg => $rules[]))
+     * Array of validation/sanitization rule.
      *
      * @var array
      */
-    protected $request_args = array();
+    protected $rules = array();
 
     /**
-     * Return the arguments and its validation rules for a given endpoint.
+     * RestApiEndpointGuard constructor.
+     * The rules is the collection of the rest api enpoint argument
+     * and the validation/sanitization rules.
      *
-     * @var array
+     * $rule = array( 'arg_name' => array( 'validation_rules' ) );
+     *
+     *
+     * @param array $rules
      */
-    public function get_endpoint_arguments( string $endpoint ): array{
+    public function __construct( array $rules = array() ) {
+        $this->rules = $rules;
+    }
 
-        if ( substr( $endpoint, 0, 1 ) !== '/' ) {
-            $endpoint = '/' . $endpoint;
-        }
-
-        return $this->request_args[$endpoint] ?? array();
+    /**
+     * This method is called by RestApiRouteService::register_api_endpoints()
+     * and it is executed for each argument of the endpoint.
+     *
+     * @return array of validation/sanitization rule.
+     */
+    public function rules(): array{
+        return $this->rules;
     }
 
     /**
@@ -42,15 +50,15 @@ class BaseRestApiEndpointGuard implements RestApiEndpointGuardInterface {
      */
     public function validate_request_arg( $field_value, $request, $field ): bool {
 
-        $route_rules = (array) $this->request_args[$request->get_route()];
-
         /** if no rules are found pass the validation (cannot return error due wordpress standard functionality)*/
 
-        if ( empty( $route_rules ) ) {
+        if ( empty( $this->rules ) ) {
             return true;
         }
 
-        $field_rules = (array) $route_rules[$field];
+        $field_rules = (array) $this->rules[$field];
+
+        var_dump( $this->validate( $field_value, $field_rules ) );
 
         return $this->validate( $field_value, $field_rules );
 
@@ -67,17 +75,16 @@ class BaseRestApiEndpointGuard implements RestApiEndpointGuardInterface {
      */
     public function sanitize_request_arg( $field_value, $request, $field ) {
 
-        $route_rules = (array) $this->request_args[$request->get_route()];
-
         /** if no rules are found return the value (cannot return error due wordpress standard functionality)*/
 
-        if ( empty( $route_rules ) ) {
+        if ( empty( $this->rules ) ) {
             return $field_value;
         }
 
-        $field_rules = $route_rules[$field];
+        $field_rules = $this->rules[$field];
+        $type        = $this->get_type( $field_rules );
 
-        return $this->sanitize( $field_value, $field_rules["type"] );
+        return $this->sanitize( $field_value, $type );
     }
 
     /**
@@ -93,7 +100,32 @@ class BaseRestApiEndpointGuard implements RestApiEndpointGuardInterface {
             return false;
         }
 
+        if ( !empty( $rules['type'] ) && $rules['type'] !== gettype( $value ) ) {
+            return false;
+        }
+
         return true;
+
+    }
+
+    /**
+     * Return the type rule.
+     *
+     * Example of type descriptor: 'string:email'
+     *
+     * @param array $rules
+     * @param bool $descriptor if true and if exists the function must returns the type descriptor instead of the global type     *
+     * @return string
+     */
+    private function get_type( array $rules, bool $descriptor = true ): string {
+
+        $type_descriptor = explode( ':', $rules['type'] );
+
+        if ( $descriptor ) {
+            return isset( $type_descriptor[1] ) ? $type_descriptor[1] : $type_descriptor[0];
+        }
+
+        return $rules['type'];
 
     }
 

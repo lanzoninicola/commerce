@@ -5,15 +5,6 @@ namespace Commerce\Backend\App\Services\RestApi;
 interface RestApiEndpointGuardInterface {
 
     /**
-     * Returns the rules for validation and sanitization of the request parameters.
-     * Must be a public method.
-     *
-     * Used in the RestApiRouteService::register_api_endpoints() class to register the endpoints.
-     * @return array
-     */
-    public function get_endpoint_arguments( string $endpoint ): array;
-
-    /**
      * This method is called by RestApiRouteService::register_api_endpoints()
      * and it is executed for each argument of the endpoint.
      *

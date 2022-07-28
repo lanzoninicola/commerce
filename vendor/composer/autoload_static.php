@@ -9,19 +9,35 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
     public static $prefixLengthsPsr4 = array (
         'C' => 
         array (
-            'Commerce\\Backend\\Modules\\Api\\V1\\Validators\\' => 43,
+            'Commerce\\Backend\\PluginCore\\' => 28,
+            'Commerce\\Backend\\Modules\\Setup\\' => 31,
             'Commerce\\Backend\\Modules\\Api\\V1\\Repositories\\' => 45,
             'Commerce\\Backend\\Modules\\Api\\V1\\Models\\' => 39,
+            'Commerce\\Backend\\Modules\\Api\\V1\\Guards\\' => 39,
             'Commerce\\Backend\\Modules\\Api\\V1\\Factories\\' => 42,
             'Commerce\\Backend\\Modules\\Api\\V1\\Controllers\\' => 44,
             'Commerce\\Backend\\Modules\\Api\\V1\\' => 32,
+            'Commerce\\Backend\\App\\Traits\\' => 28,
+            'Commerce\\Backend\\App\\Services\\Setup\\' => 36,
+            'Commerce\\Backend\\App\\Services\\ScriptLocalizer\\' => 46,
+            'Commerce\\Backend\\App\\Services\\RestApi\\' => 38,
+            'Commerce\\Backend\\App\\Services\\Logger\\' => 37,
+            'Commerce\\Backend\\App\\Services\\Database\\' => 39,
+            'Commerce\\Backend\\App\\Services\\' => 30,
+            'Commerce\\Backend\\App\\Interfaces\\' => 32,
+            'Commerce\\Backend\\App\\Common\\' => 28,
+            'Commerce\\' => 9,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Commerce\\Backend\\Modules\\Api\\V1\\Validators\\' => 
+        'Commerce\\Backend\\PluginCore\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/modules/api/v1/validators',
+            0 => __DIR__ . '/../..' . '/backend/plugin-core',
+        ),
+        'Commerce\\Backend\\Modules\\Setup\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/modules/setup',
         ),
         'Commerce\\Backend\\Modules\\Api\\V1\\Repositories\\' => 
         array (
@@ -30,6 +46,10 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
         'Commerce\\Backend\\Modules\\Api\\V1\\Models\\' => 
         array (
             0 => __DIR__ . '/../..' . '/backend/modules/api/v1/models',
+        ),
+        'Commerce\\Backend\\Modules\\Api\\V1\\Guards\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/modules/api/v1/guards',
         ),
         'Commerce\\Backend\\Modules\\Api\\V1\\Factories\\' => 
         array (
@@ -42,6 +62,46 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
         'Commerce\\Backend\\Modules\\Api\\V1\\' => 
         array (
             0 => __DIR__ . '/../..' . '/backend/modules/api/v1',
+        ),
+        'Commerce\\Backend\\App\\Traits\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/app/traits',
+        ),
+        'Commerce\\Backend\\App\\Services\\Setup\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/app/services/setup',
+        ),
+        'Commerce\\Backend\\App\\Services\\ScriptLocalizer\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/app/services/script-localizer',
+        ),
+        'Commerce\\Backend\\App\\Services\\RestApi\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/app/services/rest-api',
+        ),
+        'Commerce\\Backend\\App\\Services\\Logger\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/app/services/logger',
+        ),
+        'Commerce\\Backend\\App\\Services\\Database\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/app/services/database',
+        ),
+        'Commerce\\Backend\\App\\Services\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/app/services',
+        ),
+        'Commerce\\Backend\\App\\Interfaces\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/app/interfaces',
+        ),
+        'Commerce\\Backend\\App\\Common\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/app/common',
+        ),
+        'Commerce\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/',
         ),
     );
 

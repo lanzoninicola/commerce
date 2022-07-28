@@ -2,8 +2,6 @@
 
 namespace Commerce\Backend\PluginCore;
 
-use Commerce\Backend\Modules\Setup\CommerceSetup;
-
 /**
  * Fired during plugin activation.
  *
@@ -27,8 +25,9 @@ class Activator {
      */
     public static function activate() {
 
-        $setup = new CommerceSetup();
-        $setup->install();
+        // TODO: problems with the activation of the plugin. Show notice "sent 252 characters blah..."
+        // $setup = new CommerceSetup();
+        // $setup->install();
 
     }
 

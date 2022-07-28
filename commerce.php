@@ -1,5 +1,7 @@
 <?php
 
+namespace Commerce;
+
 /**
  * The plugin bootstrap file
  *
@@ -69,9 +71,9 @@ function uninstall() {
     Uninstaller::uninstall();
 }
 
-register_activation_hook( __FILE__, 'activate' );
-register_deactivation_hook( __FILE__, 'deactivate' );
-register_uninstall_hook( __FILE__, 'uninstall' );
+register_activation_hook( __FILE__, 'activate_commerce' );
+register_deactivation_hook( __FILE__, 'deactivate_commerce' );
+register_uninstall_hook( __FILE__, 'uninstall_commerce' );
 
 /**
  * Begins execution of the plugin.
