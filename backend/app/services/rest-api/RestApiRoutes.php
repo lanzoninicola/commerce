@@ -12,7 +12,6 @@ namespace Commerce\Backend\App\Services\RestApi;
  * @since      1.0.0
  */
 
-//TODO: handling wp-nonce
 class RestApiRoutes {
 
     /**
@@ -49,6 +48,16 @@ class RestApiRoutes {
      */
     public function api_version(): string {
         return $this->api_version;
+    }
+
+    /**
+     * Returns the full root path of endpoints that contain the namespace and the api version.
+     * (e.g. /wp-json/{plugin-name}/{rest-api-version}/)
+     *
+     * @return string
+     */
+    public function full_api_root_path(): string {
+        return "{$this->root_path()}/{$this->api_version()}";
     }
 
     /**

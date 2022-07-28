@@ -50,23 +50,55 @@ class RestApiRoutesService {
 
         foreach ( $this->routes as $route ) {
 
-            $full_api_root_path = "{$route->root_path()}/{$route->api_version()}";
-
             if ( empty( $route->endpoints() ) ) {
                 throw new \Exception( 'Endpoints not set. Set the endpoints first.' );
             }
 
             foreach ( $route->endpoints() as $endpoint ) {
 
-                register_rest_route( $full_api_root_path, $endpoint->endpoint(), array(
+                register_rest_route( $route->full_api_root_path(), $endpoint->url(), array(
                     'methods'             => $endpoint->verb(),
                     'callback'            => $endpoint->callback(),
                     'permission_callback' => $this->get_permission_callback( $endpoint->capability() ),
+                    'args'                => $this->get_validation_sanitization_args( $route->full_api_root_path(), $endpoint->url(), $endpoint->guard_class() ),
                 ) );
 
             }
 
         }
+
+    }
+
+    /**
+     * Returns the args for validation and sanitization of the request arguments.
+     * https: //developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/#arguments
+     *
+     * Wordpress first executes the validation and then the sanitization.
+     *
+     * @param string $full_api_root_path The full api root path. "{namespace(aka. plugin-name)}/{version}".)}"
+     * @param string $url The url of the endpoint. The part after the root path.
+     * @param object $guard_class The guard object.
+     *
+     * @return array
+     */
+    private function get_validation_sanitization_args( string $full_api_root_path, string $endpoint_url, object $guard_object ) {
+
+        $full_enpoint_url = "/{$full_api_root_path}/{$endpoint_url}";
+
+        $args_expected = $guard_object->get_endpoint_arguments( $full_enpoint_url );
+
+        $args = array();
+
+        foreach ( $args_expected as $arg => $rule ) {
+
+            $args[$arg] = array(
+                'sanitize_callback' => array( $guard_object, 'sanitize_request_arg' ),
+                'validate_callback' => array( $guard_object, 'validate_request_arg' ),
+            );
+
+        }
+
+        return $args;
 
     }
 

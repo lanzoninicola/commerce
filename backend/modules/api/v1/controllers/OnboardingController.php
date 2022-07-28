@@ -11,7 +11,6 @@ use Commerce\Backend\App\Services\RestApi\RequestSanitizerTrait;
 use Commerce\Backend\App\Services\RestApi\RequestValidatorTrait;
 use Commerce\Backend\App\Services\RestApi\RestApiResponseError;
 use Commerce\Backend\App\Services\RestApi\RestApiResponseSuccess;
-use Commerce\Backend\Modules\Api\V1\Guards\OnboardingRestGuard;
 use Commerce\Backend\Modules\Api\V1\Repositories\OnboardingRepository;
 
 class OnboardingController extends BaseController {
@@ -42,19 +41,6 @@ class OnboardingController extends BaseController {
     }
 
     public function create( \WP_REST_Request $request ) {
-
-        // var_dump( $request->get_route() );
-
-        $guard = new OnboardingRestGuard();
-        $guard->check( $request );
-
-        if ( $guard->is_rejected() === true ) {
-            return RestApiResponseError::error( $guard->get_error()->message(), $guard->get_error()->data() );
-        };
-
-        $data = $guard->get_sanitized_data();
-
-        var_dump( $data );
 
         return RestApiResponseSuccess::success( 'cuc', array( 'cuc' => 'ee' ) );
 
@@ -144,6 +130,13 @@ class OnboardingController extends BaseController {
         ) );
          */
 
+    }
+
+    public function update( \WP_REST_Request $request ) {
+
+        var_dump( $request->get_params() );
+
+        var_dump( $request->get_route() );
     }
 
     /**
