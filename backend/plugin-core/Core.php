@@ -7,7 +7,7 @@ use Commerce\Backend\App\Services\RestApi\RestApiRoutes;
 use Commerce\Backend\App\Services\RestApi\RestApiRoutesService;
 use Commerce\Backend\App\Services\ScriptLocalizer\ScriptAdminLocalizerService;
 use Commerce\Backend\App\Services\ScriptLocalizer\ScriptPublicLocalizerService;
-use Commerce\Backend\Modules\Api\V1\Controllers\OnboardingControllerFactory;
+use Commerce\Backend\Modules\Api\V1\Factories\OnboardingControllerFactory;
 use Commerce\Backend\PluginCore\I18n;
 
 /**
