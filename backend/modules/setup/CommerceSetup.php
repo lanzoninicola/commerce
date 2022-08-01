@@ -19,7 +19,8 @@ class CommerceSetup implements PluginSetupInterface {
         $this->plugin_setup = new PluginSetup(
             COMMERCE_PLUGIN_NAME,
             COMMERCE_PLUGIN_DB_PREFIX,
-            COMMERCE_PLUGIN_VERSION
+            COMMERCE_PLUGIN_VERSION,
+            COMMERCE_PLUGIN_ID
         );
 
         $this->define_db_schema();
@@ -29,25 +30,53 @@ class CommerceSetup implements PluginSetupInterface {
     public function define_db_schema(): void {
 
         $tables = array(
-            'user_marketing' => array(
-                'id'                 => 'bigint(20) unsigned NOT NULL AUTO_INCREMENT',
-                'wp_user_id'         => 'bigint(20) unsigned NOT NULL',
-                'consent_newsletter' => 'TINYINT NULL',
-                'consent_privacy'    => 'TINYINT NULL',
-                'consent_terms'      => 'TINYINT NULL',
-                'created_at'         => 'datetime NOT NULL',
-                'updated_at'         => 'datetime NOT NULL',
-                'PRIMARY KEY (id)',
-            ),
-            'user_regioned'  => array(
-                'id'            => 'bigint(20) unsigned NOT NULL AUTO_INCREMENT',
-                'wp_user_id'    => 'bigint(20) unsigned NOT NULL',
-                'site_language' => 'VARCHAR(100) NULL',
-                'timezone'      => 'VARCHAR(100) NULL',
-                'created_at'    => 'datetime NOT NULL',
-                'updated_at'    => 'datetime NOT NULL',
-                'PRIMARY KEY (id)',
-            ),
+            'user_marketing'              => "CREATE TABLE `%table_name%` (
+                id INT NOT NULL AUTO_INCREMENT,
+                wp_user_id bigint(20) unsigned NOT NULL,
+                consent_newsletter TINYINT NULL,
+                consent_privacy TINYINT NULL,
+                consent_terms TINYINT NULL,
+                created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at datetime NULL,
+                PRIMARY KEY  (id)
+                ) %charset_collate%;",
+            'products'                    => "CREATE TABLE `%table_name%` (
+                id INT NOT NULL AUTO_INCREMENT,
+                name VARCHAR(255) NULL,
+                description VARCHAR(255) NULL,
+                created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at datetime NULL,
+                PRIMARY KEY  (id)
+                ) %charset_collate%;",
+            'products_installations'      => "CREATE TABLE `%table_name%` (
+                id INT NOT NULL AUTO_INCREMENT,
+                installation_id BINARY(16) NOT NULL,
+                wp_user_id bigint(20) unsigned NOT NULL,
+                product_id bigint(20) unsigned NOT NULL,
+                site_url VARCHAR(255) NULL,
+                site_language VARCHAR(100) NULL,
+                site_timezone VARCHAR(100) NULL,
+                created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at datetime NULL,
+                PRIMARY KEY  (id)
+                ) %charset_collate%;",
+            'product_license'             => "CREATE TABLE `%table_name%` (
+                id INT NOT NULL AUTO_INCREMENT,
+                license_id BINARY(16) NOT NULL,
+                wp_user_id bigint(20) unsigned NOT NULL,
+                product_id bigint(20) unsigned NOT NULL,
+                created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at datetime NULL,
+                PRIMARY KEY  (id)
+                ) %charset_collate%;",
+            'product_license_activations' => "CREATE TABLE `%table_name%` (
+                id INT NOT NULL AUTO_INCREMENT,
+                license_id BINARY(16) NOT NULL,
+                site_url VARCHAR(255) NULL,
+                created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at datetime NULL,
+                PRIMARY KEY  (id)
+                ) %charset_collate%;",
         );
 
         $this->plugin_setup->define_db_schema( $tables );
@@ -62,6 +91,7 @@ class CommerceSetup implements PluginSetupInterface {
     public function install(): void {
 
         $this->plugin_setup->install();
+
     }
 
     /**

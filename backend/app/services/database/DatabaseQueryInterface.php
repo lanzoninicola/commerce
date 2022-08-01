@@ -14,7 +14,16 @@ interface DatabaseQueryInterface {
      *
      * @return DatabaseResponse
      */
-    public function insert_row( string $table_name, array $data ): DatabaseResponse;
+    public function insert_row( string $table_name, array $data, $format = null ): DatabaseResponse;
+
+    /**
+     * Executes multiple insert queries.
+     *
+     * @param array $tables_inserts
+     * @param boolean $on_error_rollback
+     * @return DatabaseResponse
+     */
+    public function insert_batch( array $tables_inserts, bool $on_error_rollback = false ): DatabaseResponse;
 
     /**
      * Update a row.
@@ -45,5 +54,21 @@ interface DatabaseQueryInterface {
      * @return DatabaseResponse
      */
     public function get_all_rows( string $table_name ): DatabaseResponse;
+
+    /**
+     * Make a generic query given as parameter.
+     *
+     * @return DatabaseResponse
+     */
+    public function query( string $sql, ?string $table_name = null ): DatabaseResponse;
+
+    /**
+     * Make a generic SELECT query given as parameter.
+     *
+     * @param string $table_name
+     * @param array $conditions
+     * @return void
+     */
+    public function select( string $table_name, array $conditions ): DatabaseResponse;
 
 }

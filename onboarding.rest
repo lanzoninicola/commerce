@@ -1,19 +1,29 @@
 ### List all onboarding
 GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding
 
+### Onboarding by installation_id   
+GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding/3be6607b-0f40-11ed-9cce-040e3caabadb
+
+
+### Get account by email
+GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/account?email=lanzoni.nicola@gmail.com
+
 ### Create an onboarding
 POST http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding
 content-type: application/json
 
 {
-    "fullname": 1,
+    "fullname": "John Doe",
     "email": "john.doe@gmail.com!",
     "consent_newsletter": true,
     "consent_terms": true,
     "consent_privacy": true,
-    "installation_id": "123456789",
+    "product_id": 1,
+    "installation_id": "3be6607b-0f40-11ed-9cce-040e3caabadb",
+    "site_url": "http://localhost",
     "site_language": "Portoguese",
-    "timezone": "America/Sao_Paulo"
+    "site_timezone": "America/Sao_Paulo"
+    
 }
 
 ###

@@ -58,8 +58,6 @@ class RestApiEndpointGuard implements RestApiEndpointGuardInterface {
 
         $field_rules = (array) $this->rules[$field];
 
-        var_dump( $this->validate( $field_value, $field_rules ) );
-
         return $this->validate( $field_value, $field_rules );
 
     }
@@ -82,7 +80,7 @@ class RestApiEndpointGuard implements RestApiEndpointGuardInterface {
         }
 
         $field_rules = $this->rules[$field];
-        $type        = $this->get_type( $field_rules );
+        $type        = $this->get_type_from_rules( $field_rules, true );
 
         return $this->sanitize( $field_value, $type );
     }
@@ -96,14 +94,17 @@ class RestApiEndpointGuard implements RestApiEndpointGuardInterface {
      */
     public function validate( $value, array $rules ): bool {
 
+// 'required' validation
         if ( $rules['required'] && empty( $value ) ) {
             return false;
         }
 
-        if ( !empty( $rules['type'] ) && $rules['type'] !== gettype( $value ) ) {
+// 'type' validation
+        if ( !empty( $rules['type'] ) && $this->get_type_from_rules( $rules ) !== gettype( $value ) ) {
             return false;
         }
 
+        // if no rules are found pass the validation
         return true;
 
     }
@@ -117,15 +118,16 @@ class RestApiEndpointGuard implements RestApiEndpointGuardInterface {
      * @param bool $descriptor if true and if exists the function must returns the type descriptor instead of the global type     *
      * @return string
      */
-    private function get_type( array $rules, bool $descriptor = true ): string {
+    private function get_type_from_rules( array $rules, bool $descriptor = false ): string {
 
-        $type_descriptor = explode( ':', $rules['type'] );
+        $global_type     = explode( ':', $rules['type'] )[0];
+        $type_descriptor = explode( ':', $rules['type'] )[1];
 
         if ( $descriptor ) {
-            return isset( $type_descriptor[1] ) ? $type_descriptor[1] : $type_descriptor[0];
+            return isset( $type_descriptor ) ? $type_descriptor : $global_type;
         }
 
-        return $rules['type'];
+        return $global_type;
 
     }
 

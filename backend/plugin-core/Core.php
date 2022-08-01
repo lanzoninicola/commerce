@@ -8,7 +8,8 @@ use Commerce\Backend\App\Services\RestApi\RestApiRoutes;
 use Commerce\Backend\App\Services\RestApi\RestApiRoutesService;
 use Commerce\Backend\App\Services\ScriptLocalizer\ScriptAdminLocalizerService;
 use Commerce\Backend\App\Services\ScriptLocalizer\ScriptPublicLocalizerService;
-use Commerce\Backend\Modules\Api\V1\Factories\OnboardingControllerFactory;
+use Commerce\Backend\Modules\Api\V1\Accounts\AccountControllerFactory;
+use Commerce\Backend\Modules\Api\V1\Onboarding\OnboardingControllerFactory;
 use Commerce\Backend\PluginCore\I18n;
 
 /**
@@ -213,17 +214,14 @@ class Core {
      */
     private function define_rest_api_routes() {
 
-        $onboarding_endpoint   = 'onboarding';
-        $onboarding_controller = OnboardingControllerFactory::create();
-
         $endpoints_v1 = array(
-            new RestApiEndpoint( $onboarding_endpoint, 'GET',
-                array( $onboarding_controller, 'find_all' ),
+            new RestApiEndpoint( '/onboarding/(?P<installation_id>[a-zA-Z0-9-]+)', 'GET',
+                array( OnboardingControllerFactory::create(), 'find_by_installation_id' ),
                 'public',
                 new RestApiEndpointGuard()
             ),
-            new RestApiEndpoint( $onboarding_endpoint, 'POST',
-                array( $onboarding_controller, 'create' ),
+            new RestApiEndpoint( '/onboarding', 'POST',
+                array( OnboardingControllerFactory::create(), 'create' ),
                 'public',
                 new RestApiEndpointGuard( array(
                     'fullname'           => array(
@@ -248,7 +246,7 @@ class Core {
                     ),
                     'installation_id'    => array(
                         'required' => true,
-                        'type'     => 'number',
+                        'type'     => 'string',
                     ),
                     'site_language'      => array(
                         'required' => false,
@@ -260,13 +258,13 @@ class Core {
                     ),
                 ) )
             ),
-            new RestApiEndpoint( 'onboarding/(?P<id>\d+)', 'POST',
-                array( $onboarding_controller, 'update' ),
+            new RestApiEndpoint( '/account', 'GET',
+                array( AccountControllerFactory::create(), 'get_account' ),
                 'public',
                 new RestApiEndpointGuard( array(
-                    'id' => array(
+                    'email' => array(
                         'required' => true,
-                        'type'     => 'number',
+                        'type'     => 'string:email',
                     ),
                 ) )
             ),

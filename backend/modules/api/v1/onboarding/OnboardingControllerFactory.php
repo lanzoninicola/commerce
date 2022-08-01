@@ -1,10 +1,8 @@
 <?php
 
-namespace Commerce\Backend\Modules\Api\V1\Factories;
+namespace Commerce\Backend\Modules\Api\V1\Onboarding;
 
 use Commerce\Backend\App\Services\Database\DatabaseQuery;
-use Commerce\Backend\Modules\Api\V1\Controllers\OnboardingController;
-use Commerce\Backend\Modules\Api\V1\Repositories\OnboardingRepository;
 
 class OnboardingControllerFactory {
 

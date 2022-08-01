@@ -14,12 +14,8 @@
       "Commerce\\Backend\\App\\Traits\\": "./backend/app/traits",
       "Commerce\\Backend\\App\\Common\\": "./backend/app/common",
       "Commerce\\Backend\\Modules\\Setup\\": "./backend/modules/setup",
-      "Commerce\\Backend\\Modules\\Api\\V1\\": "./backend/modules/api/v1",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Controllers\\": "./backend/modules/api/v1/controllers",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Factories\\": "./backend/modules/api/v1/factories",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Repositories\\": "./backend/modules/api/v1/repositories",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Models\\": "./backend/modules/api/v1/models",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Guards\\": "./backend/modules/api/v1/guards"
+      "Commerce\\Backend\\Modules\\Api\\V1\\Onboarding\\": "./backend/modules/api/v1/onboarding",
+      "Commerce\\Backend\\Modules\\Api\\V1\\Accounts\\": "./backend/modules/api/v1/accounts"
     }
   },
   "authors": [

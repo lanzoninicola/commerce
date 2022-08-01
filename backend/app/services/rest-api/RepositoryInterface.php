@@ -22,10 +22,10 @@ interface RepositoryInterface {
     /**
      * Insert a new record.
      *
-     * @param array $data
+     * @param object $data
      * @return int
      */
-    public function insert( array $data );
+    public function insert( object $data );
 
     /**
      * Update a record.

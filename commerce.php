@@ -36,44 +36,18 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
     require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
-use Commerce\Backend\PluginCore\Activator;
 use Commerce\Backend\PluginCore\Core;
-use Commerce\Backend\PluginCore\Deactivator;
-use Commerce\Backend\PluginCore\Uninstaller;
 
+define( 'COMMERCE_PLUGIN_ID', '1' );
 define( 'COMMERCE_PLUGIN_NAME', 'commerce' );
 define( 'COMMERCE_PLUGIN_VERSION', '1.0.1' );
 define( 'COMMERCE_PLUGIN_DB_PREFIX', 'comm' );
 define( 'COMMERCE_PLUGIN_BASE_URL_PATH', plugin_dir_url( __FILE__ ) );
 define( 'COMMERCE_TEXT_DOMAIN', 'commerce' );
 
-/**
- * The code that runs during plugin activation.
- * This action is documented in plugin-core/Activator.php
- */
-function activate() {
-    Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in plugin-core/Deactivator.php
- */
-function deactivate() {
-    Deactivator::deactivate();
-}
-
-/**
- * The code that runs when the plugin is uninstalled.
- * This action is documented in plugin-core/Uninstaller.php
- */
-function uninstall() {
-    Uninstaller::uninstall();
-}
-
-register_activation_hook( __FILE__, 'activate_commerce' );
-register_deactivation_hook( __FILE__, 'deactivate_commerce' );
-register_uninstall_hook( __FILE__, 'uninstall_commerce' );
+register_activation_hook( __FILE__, array( 'Commerce\Backend\PluginCore\Activator', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'Commerce\Backend\PluginCore\Deactivator', 'deactivate' ) );
+register_uninstall_hook( __FILE__, array( 'Commerce\Backend\PluginCore\Uninstaller', 'uninstall' ) );
 
 /**
  * Begins execution of the plugin.

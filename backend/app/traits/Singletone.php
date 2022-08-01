@@ -26,7 +26,7 @@ trait Singleton {
      *
      * @return object Singleton instance of the class.
      */
-    final public static function get_instance() {
+    final public static function singletone() {
         /**
          * Collection of instance.
          *

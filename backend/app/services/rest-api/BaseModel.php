@@ -1,6 +1,6 @@
 <?php
 
-namespace Commerce\Backend\Modules\Api\V1\Models;
+namespace Commerce\Backend\App\Services\RestApi;
 
 abstract class BaseModel {
 

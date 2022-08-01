@@ -34,6 +34,13 @@ class PluginSetup {
     protected $db_version;
 
     /**
+     * The id of the plugin.
+     *
+     * @var string
+     */
+    protected $plugin_id;
+
+    /**
      * Array of SQL CREATE script that will be used
      * for create/update database via dbDelta() function.
      *
@@ -49,18 +56,32 @@ class PluginSetup {
     private $tables = array();
 
     /**
+     * The options to be saved in the database.
+     *
+     * @var array
+     */
+    private $options = array();
+
+    /**
      * Instanciate the object responsible for the setup.
      *
      * @param string $plugin_name The name of the plugin. Costant defined in the plugin **[PLUGIN_NAME]_PLUGIN_NAME**.
      * @param string $db_prefix The prefix to add to the plugin tables. Costant defined in the plugin **[PLUGIN_NAME]_DB_PREFIX**.
      * @param string $db_version The db version of the plugin. Costant defined in the plugin **[PLUGIN_NAME]_PLUGIN_VERSION**.
+     * @param string $plugin_id The id of the plugin. Costant defined in the plugin **[PLUGIN_NAME]_PLUGIN_ID**.
      */
-    public function __construct( string $plugin_name, string $db_prefix, string $db_version ) {
+    public function __construct( string $plugin_name, string $db_prefix, string $db_version, string $plugin_id ) {
 
         $this->plugin_name = strtolower( $plugin_name );
         $this->db_prefix   = $db_prefix;
         $this->db_version  = $db_version;
+        $this->plugin_id   = $plugin_id;
 
+        $this->options = array(
+            'db_tables_prefix' => $this->db_prefix,
+            'db_version'       => $this->db_version,
+            'plugin_id'        => $this->plugin_id,
+        );
     }
 
     /**
@@ -108,8 +129,10 @@ class PluginSetup {
      */
     public function add_options(): void {
 
-        add_option( "{$this->plugin_name}_db_tables_prefix", $this->db_prefix );
-        add_option( "{$this->plugin_name}_db_version", $this->db_version );
+        foreach ( $this->options as $option_name => $option_value ) {
+            add_option( "{$this->plugin_name}_{$option_name}", $option_value );
+        }
+
     }
 
     /**
@@ -119,19 +142,21 @@ class PluginSetup {
      */
     public function remove_options(): void {
 
-        delete_option( "{$this->plugin_name}_db_tables_prefix" );
-        delete_option( "{$this->plugin_name}_db_version" );
+        foreach ( $this->options as $option_name => $option_value ) {
+            delete_option( "{$this->plugin_name}_{$option_name}", $option_value );
+        }
+
     }
 
     /**
      * Create/update database tables via dbDelta() function.
      *
-     * @return void
+     * @return array
      */
-    private function sync_db() {
+    private function sync_db(): array{
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-        dbDelta( $this->schema );
+        return dbDelta( $this->schema );
     }
 
     /**
@@ -152,12 +177,14 @@ class PluginSetup {
     /**
      * Add the tables to the database.
      *
-     * @return void
+     * @return array The result of the dbDelta() function.
      */
-    public function install() {
+    public function install(): array{
 
         $this->add_options();
-        $this->sync_db();
+        $result = $this->sync_db();
+
+        return $result;
 
     }
 
