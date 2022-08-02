@@ -3,6 +3,7 @@
 namespace Commerce;
 
 use Commerce\Config\Configurator;
+use Commerce\Core\Init;
 use Commerce\Core\ServiceProvider;
 
 /**
@@ -61,10 +62,11 @@ register_uninstall_hook( __FILE__, array( 'Commerce\Client\Setup\Uninstaller', '
  */
 function run_plugin() {
 
-    $service_provider = new ServiceProvider();
+    $config = new Configurator();
 
-    new Configurator( $service_provider );
-    $service_provider->run();
+    $init = new Init( $config );
+
+    $init->run();
 
 }
 

@@ -23,7 +23,7 @@ use Commerce\Core\I18n;
  *
  * @since      1.0.0
  */
-class ServiceProvider {
+class Init {
 
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
@@ -79,6 +79,13 @@ class ServiceProvider {
     public $script_public_localizer;
 
     /**
+     * The configurator responsible for configuring the plugin.
+     *
+     * @var PluginConfigurable
+     */
+    public $configurator;
+
+    /**
      * Define the core functionality of the plugin.
      *
      * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -87,10 +94,12 @@ class ServiceProvider {
      *
      * @since    1.0.0
      */
-    public function __construct() {
+    public function __construct( PluginConfigurable $configurator ) {
 
         $this->load_services();
         $this->set_locale();
+
+        $this->configurator = $configurator;
 
     }
 
@@ -126,16 +135,29 @@ class ServiceProvider {
 
     }
 
+    public function run_configuration() {
+
+        $this->configurator->define_shortcodes( $this->shortcodes_loader );
+        $this->configurator->define_scripts( $this->scripts_enqueuer );
+        $this->configurator->define_admin_hooks( $this->hooks_loader );
+        $this->configurator->define_public_hooks( $this->hooks_loader );
+        $this->configurator->define_localized_script( $this->script_admin_localizer, $this->script_public_localizer );
+        $this->configurator->define_rest_api_routes( $this->routes_service );
+    }
+
     /**
      * Run:
-     * 1. The Shortcodes loader to instanciate the shortcodes classes and register the shortcode.
-     * 2. The Scripts enqueuer to execute all of the hooks related to javascript and css files.
-     * 3. The hooks loader to execute all of the hooks with WordPress.
-     * 4. The RestApiRoutes service to register the routes for the rest api.
+     * 1. The configuration of the plugin.
+     * 2. The Shortcodes loader to instanciate the shortcodes classes and register the shortcode.
+     * 3. The Scripts enqueuer to execute all of the hooks related to javascript and css files.
+     * 4. The hooks loader to execute all of the hooks with WordPress.
+     * 5. The RestApiRoutes service to register the routes for the rest api.
      *
      * @since    1.0.0
      */
     public function run() {
+
+        $this->run_configuration();
 
         $this->shortcodes_loader->run();
 
@@ -144,28 +166,6 @@ class ServiceProvider {
         $this->hooks_loader->run();
 
         $this->routes_service->run();
-    }
-
-    /**
-     * The reference to the class that orchestrates the hooks with the plugin.
-     *
-     * @since     1.0.0
-     *
-     * @return Commerce_Loader Orchestrates the hooks of the plugin.
-     */
-    public function get_loader() {
-        return $this->hooks_loader;
-    }
-
-    /**
-     * Retrieve the version number of the plugin.
-     *
-     * @since     1.0.0
-     *
-     * @return string The version number of the plugin.
-     */
-    public function get_version() {
-        return $this->version;
     }
 
 }

@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Commerce\\Core\\' => array($baseDir . '/core'),
+    'Commerce\\Config\\' => array($baseDir . '/config'),
     'Commerce\\Client\\Backend\\Setup\\' => array($baseDir . '/.client/backend/setup'),
     'Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\' => array($baseDir . '/.client/backend/api/v1/onboarding'),
     'Commerce\\Client\\Backend\\Api\\V1\\Models\\' => array($baseDir . '/.client/backend/api/v1/models'),

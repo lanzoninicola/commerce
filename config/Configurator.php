@@ -5,25 +5,18 @@ namespace Commerce\Config;
 use Commerce\App\Services\RestApi\RestApiEndpoint;
 use Commerce\App\Services\RestApi\RestApiEndpointGuard;
 use Commerce\App\Services\RestApi\RestApiRoutes;
+use Commerce\App\Services\RestApi\RestApiRoutesService;
+use Commerce\App\Services\ScriptLocalizer\ScriptAdminLocalizerService;
+use Commerce\App\Services\ScriptLocalizer\ScriptPublicLocalizerService;
 use Commerce\Client\Backend\Api\V1\Accounts\AccountControllerFactory;
 use Commerce\Client\Backend\Api\V1\Analytics\AnalyticsControllerFactory;
 use Commerce\Client\Backend\Api\V1\Onboarding\OnboardingControllerFactory;
-use Commerce\Core\ServiceProvider;
+use Commerce\Core\HooksLoader;
+use Commerce\Core\PluginConfigurable;
+use Commerce\Core\ScriptsEnqueuer;
+use Commerce\Core\ShortcodesLoader;
 
-class Configurator {
-
-    public function __construct( ServiceProvider $service_provider ) {
-
-        $this->service_provider = $service_provider;
-
-        $this->define_shortcodes();
-        $this->define_scripts();
-        $this->define_admin_hooks();
-        $this->define_public_hooks();
-        $this->define_localized_script();
-        $this->define_rest_api_routes();
-
-    }
+class Configurator implements PluginConfigurable {
 
     /**
      * Adding the plugin menu to Wordpress admin menu
@@ -36,7 +29,7 @@ class Configurator {
      * Adding the shortcodes to Wordpress
      *
      */
-    private function define_shortcodes() {
+    public function define_shortcodes( ShortcodesLoader $shortcode_loaders ) {
 
     }
 
@@ -48,7 +41,7 @@ class Configurator {
      *
      * @return void
      */
-    private function define_scripts() {
+    public function define_scripts( ScriptsEnqueuer $scripts_enqueuer ) {
 
     }
 
@@ -56,10 +49,10 @@ class Configurator {
      * Register all of the hooks related to the admin area functionality
      * of the plugin.
      *
-     * @access   private
+     * @access   public
      * @since    1.0.0
      */
-    private function define_admin_hooks() {
+    public function define_admin_hooks( HooksLoader $hooks_loader ) {
 
     }
 
@@ -67,10 +60,10 @@ class Configurator {
      * Register all of the hooks related to the public-facing functionality
      * of the plugin.
      *
-     * @access   private
+     * @access   public
      * @since    1.0.0
      */
-    private function define_public_hooks() {
+    public function define_public_hooks( HooksLoader $hooks_loader ) {
 
     }
 
@@ -80,9 +73,9 @@ class Configurator {
      *
      * @return void
      */
-    private function define_localized_script() {
+    public function define_localized_script( ScriptAdminLocalizerService $script_admin_localizer, ScriptPublicLocalizerService $script_public_localizer ) {
 
-        $this->service_provider->script_admin_localizer->localize(
+        $script_admin_localizer->localize(
             array(
                 'apiURL'   => home_url( '/wp-json' ),
                 'language' => get_locale(),
@@ -100,7 +93,7 @@ class Configurator {
      *
      * @return void
      */
-    private function define_rest_api_routes() {
+    public function define_rest_api_routes( RestApiRoutesService $routes_service ) {
 
         $endpoints_v1 = array(
             new RestApiEndpoint( '/analytics/installations/(?P<installation_id>[a-zA-Z0-9-]+)', 'GET',
@@ -182,7 +175,7 @@ class Configurator {
 
         $routes = new RestApiRoutes( 'commerce', 'v1', $endpoints_v1 );
 
-        $this->service_provider->routes_service->add_routes( $routes );
+        $routes_service->add_routes( $routes );
 
     }
 

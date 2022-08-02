@@ -10,6 +10,7 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
         'C' => 
         array (
             'Commerce\\Core\\' => 14,
+            'Commerce\\Config\\' => 16,
             'Commerce\\Client\\Backend\\Setup\\' => 30,
             'Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\' => 42,
             'Commerce\\Client\\Backend\\Api\\V1\\Models\\' => 38,
@@ -32,6 +33,10 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
         'Commerce\\Core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core',
+        ),
+        'Commerce\\Config\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/config',
         ),
         'Commerce\\Client\\Backend\\Setup\\' => 
         array (
