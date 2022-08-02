@@ -12,6 +12,8 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
             'Commerce\\Backend\\PluginCore\\' => 28,
             'Commerce\\Backend\\Modules\\Setup\\' => 31,
             'Commerce\\Backend\\Modules\\Api\\V1\\Onboarding\\' => 43,
+            'Commerce\\Backend\\Modules\\Api\\V1\\Models\\' => 39,
+            'Commerce\\Backend\\Modules\\Api\\V1\\Analytics\\' => 42,
             'Commerce\\Backend\\Modules\\Api\\V1\\Accounts\\' => 41,
             'Commerce\\Backend\\App\\Traits\\' => 28,
             'Commerce\\Backend\\App\\Services\\Setup\\' => 36,
@@ -38,6 +40,14 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
         'Commerce\\Backend\\Modules\\Api\\V1\\Onboarding\\' => 
         array (
             0 => __DIR__ . '/../..' . '/backend/modules/api/v1/onboarding',
+        ),
+        'Commerce\\Backend\\Modules\\Api\\V1\\Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/modules/api/v1/models',
+        ),
+        'Commerce\\Backend\\Modules\\Api\\V1\\Analytics\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/backend/modules/api/v1/analytics',
         ),
         'Commerce\\Backend\\Modules\\Api\\V1\\Accounts\\' => 
         array (

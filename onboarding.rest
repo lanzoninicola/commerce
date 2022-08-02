@@ -8,23 +8,39 @@ GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding/3be6607b-0f4
 ### Get account by email
 GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/account?email=lanzoni.nicola@gmail.com
 
+### Get the installation by id
+GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/analytics/installations/3be6607b-0f40-11ed-9cce-040e3caabadb
+
+### Track new installation
+POST http://localhost/bb-melhor-envio/wp-json/commerce/v1/analytics/installations
+content-type: application/json
+
+{
+    "product_id": 1,
+    "installation_id": "7cg9997b-0f40-11ed-9cce-040e3caabadb",
+    "site_url": "http://localhost",
+    "site_language": "Portoguese",
+    "site_timezone": "America/Sao_Paulo"
+}
+
+### "installation_id": "3be6607b-0f40-11ed-9cce-040e3caabadb",
+
+
 ### Create an onboarding
 POST http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding
 content-type: application/json
 
 {
-    "fullname": "John Doe",
-    "email": "john.doe@gmail.com!",
+    "fullname": "Johnny Doenza",
+    "email": "johnny@gmail.com!",
     "consent_newsletter": true,
     "consent_terms": true,
     "consent_privacy": true,
     "product_id": 1,
-    "installation_id": "3be6607b-0f40-11ed-9cce-040e3caabadb",
-    "site_url": "http://localhost",
-    "site_language": "Portoguese",
-    "site_timezone": "America/Sao_Paulo"
-    
+    "installation_id": "7cg9997b-0f40-11ed-9cce-040e3caabadb"
 }
+
+### "installation_id": "3be6607b-0f40-11ed-9cce-040e3caabadb"
 
 ###
 POST http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding/2

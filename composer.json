@@ -15,7 +15,9 @@
       "Commerce\\Backend\\App\\Common\\": "./backend/app/common",
       "Commerce\\Backend\\Modules\\Setup\\": "./backend/modules/setup",
       "Commerce\\Backend\\Modules\\Api\\V1\\Onboarding\\": "./backend/modules/api/v1/onboarding",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Accounts\\": "./backend/modules/api/v1/accounts"
+      "Commerce\\Backend\\Modules\\Api\\V1\\Accounts\\": "./backend/modules/api/v1/accounts",
+      "Commerce\\Backend\\Modules\\Api\\V1\\Analytics\\": "./backend/modules/api/v1/analytics",
+      "Commerce\\Backend\\Modules\\Api\\V1\\Models\\": "./backend/modules/api/v1/models"
     }
   },
   "authors": [

@@ -9,9 +9,9 @@ use Commerce\Backend\App\Services\RestApi\RestApiResponseSuccess;
 class OnboardingController {
 
     /**
-     * @var OnboardingRepository
+     * @var OnboardingService
      */
-    protected $repository;
+    protected $service;
 
     /**
      * Singleton instance.
@@ -25,43 +25,36 @@ class OnboardingController {
      *
      * @return OnboardingController
      */
-    public static function singletone( OnboardingRepository $repository ) {
+    public static function singletone( OnboardingService $service ) {
 
         if ( self::$instance === null ) {
-            self::$instance = new OnboardingController( $repository );
+            self::$instance = new OnboardingController( $service );
         }
 
         return self::$instance;
     }
 
-    public function __construct( OnboardingRepository $repository ) {
-        $this->repository = $repository;
+    public function __construct( OnboardingService $service ) {
+        $this->service = $service;
     }
 
-    public function create( \WP_REST_Request $request ) {
+    /**
+     * Register a new onboarding request
+     *
+     * @param \WP_REST_Request $request
+     * @return void
+     */
+    public function new_onboarding( \WP_REST_Request $request ) {
 
         $operation = 'New onboarding';
 
-        $new_onboarding_params = $request->get_params();
+        $new_onboarding = $request->get_params();
 
-        $new_onboarding = new OnboardingModel(
-            $new_onboarding_params['fullname'],
-            $new_onboarding_params['email'],
-            $new_onboarding_params['consent_newsletter'],
-            $new_onboarding_params['consent_terms'],
-            $new_onboarding_params['consent_privacy'],
-            $new_onboarding_params['product_id'],
-            $new_onboarding_params['installation_id'],
-            $new_onboarding_params['site_url'],
-            $new_onboarding_params['site_language'],
-            $new_onboarding_params['site_timezone']
-        );
-
-        $result = $this->repository->insert( $new_onboarding );
+        $result = $this->service->new_onboarding( $new_onboarding );
 
         if ( $result instanceof Error ) {
 
-            return new RestApiResponseError( $result->get_error_message(), $operation );
+            return RestApiResponseError::error( $result->get_error_message(), $result->get_error_data() );
         }
 
         return RestApiResponseSuccess::success( 'Onboarding success', array(
@@ -72,25 +65,6 @@ class OnboardingController {
             ),
         ) );
 
-    }
-
-    public function find_by_installation_id( \WP_REST_Request $request ) {
-
-        $operation       = 'Find onboarding by installation id';
-        $installation_id = $request->get_param( 'installation_id' );
-
-        $result = $this->repository->find_by_installation_id( $installation_id );
-
-        if ( $result instanceof Error ) {
-            return new RestApiResponseError( $result->get_error_message(), $operation );
-        }
-
-        return RestApiResponseSuccess::success( 'Onboarding success', array(
-            'operation' => $operation,
-            'payload'   => array(
-                'onboarding' => 'cucu',
-            ),
-        ) );
     }
 
 }

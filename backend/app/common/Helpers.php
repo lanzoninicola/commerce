@@ -17,7 +17,7 @@ class Helpers {
     /**
      * Check if the value passed is an instance of the plugin Error class.
      *
-     * @param array $array
+     * @param mixde $value
      * @return boolean
      */
     public static function is_error( $value ) {

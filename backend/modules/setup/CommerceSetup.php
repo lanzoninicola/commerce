@@ -30,7 +30,7 @@ class CommerceSetup implements PluginSetupInterface {
     public function define_db_schema(): void {
 
         $tables = array(
-            'user_marketing'              => "CREATE TABLE `%table_name%` (
+            'user_marketing_preferences'  => "CREATE TABLE `%table_name%` (
                 id INT NOT NULL AUTO_INCREMENT,
                 wp_user_id bigint(20) unsigned NOT NULL,
                 consent_newsletter TINYINT NULL,
@@ -50,12 +50,12 @@ class CommerceSetup implements PluginSetupInterface {
                 ) %charset_collate%;",
             'products_installations'      => "CREATE TABLE `%table_name%` (
                 id INT NOT NULL AUTO_INCREMENT,
-                installation_id BINARY(16) NOT NULL,
-                wp_user_id bigint(20) unsigned NOT NULL,
                 product_id bigint(20) unsigned NOT NULL,
+                installation_id BINARY(16) NOT NULL,
                 site_url VARCHAR(255) NULL,
                 site_language VARCHAR(100) NULL,
                 site_timezone VARCHAR(100) NULL,
+                wp_user_id bigint(20) unsigned NULL,
                 created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
                 updated_at datetime NULL,
                 PRIMARY KEY  (id)

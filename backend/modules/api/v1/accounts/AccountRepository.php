@@ -3,9 +3,8 @@
 namespace Commerce\Backend\Modules\Api\V1\Accounts;
 
 use Commerce\Backend\App\Services\Database\DatabaseQueryInterface;
-use Commerce\Backend\App\Services\RestApi\RepositoryInterface;
 
-class AccountRepository implements RepositoryInterface {
+class AccountRepository {
     /**
      * Query service.
      *

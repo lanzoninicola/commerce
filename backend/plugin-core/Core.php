@@ -9,6 +9,7 @@ use Commerce\Backend\App\Services\RestApi\RestApiRoutesService;
 use Commerce\Backend\App\Services\ScriptLocalizer\ScriptAdminLocalizerService;
 use Commerce\Backend\App\Services\ScriptLocalizer\ScriptPublicLocalizerService;
 use Commerce\Backend\Modules\Api\V1\Accounts\AccountControllerFactory;
+use Commerce\Backend\Modules\Api\V1\Analytics\AnalyticsControllerFactory;
 use Commerce\Backend\Modules\Api\V1\Onboarding\OnboardingControllerFactory;
 use Commerce\Backend\PluginCore\I18n;
 
@@ -215,13 +216,39 @@ class Core {
     private function define_rest_api_routes() {
 
         $endpoints_v1 = array(
-            new RestApiEndpoint( '/onboarding/(?P<installation_id>[a-zA-Z0-9-]+)', 'GET',
-                array( OnboardingControllerFactory::create(), 'find_by_installation_id' ),
+            new RestApiEndpoint( '/analytics/installations/(?P<installation_id>[a-zA-Z0-9-]+)', 'GET',
+                array( AnalyticsControllerFactory::create(), 'find_by_product_installation_id' ),
                 'public',
                 new RestApiEndpointGuard()
             ),
+            new RestApiEndpoint( '/analytics/installations', 'POST',
+                array( AnalyticsControllerFactory::create(), 'new_product_installation' ),
+                'public',
+                new RestApiEndpointGuard( array(
+                    'product_id'      => array(
+                        'required' => true,
+                        'type'     => 'integer',
+                    ),
+                    'installation_id' => array(
+                        'required' => true,
+                        'type'     => 'string',
+                    ),
+                    'site_url'        => array(
+                        'required' => false,
+                        'type'     => 'string',
+                    ),
+                    'site_language'   => array(
+                        'required' => false,
+                        'type'     => 'string',
+                    ),
+                    'site_timezone'   => array(
+                        'required' => false,
+                        'type'     => 'string',
+                    ),
+                ) )
+            ),
             new RestApiEndpoint( '/onboarding', 'POST',
-                array( OnboardingControllerFactory::create(), 'create' ),
+                array( OnboardingControllerFactory::create(), 'new_onboarding' ),
                 'public',
                 new RestApiEndpointGuard( array(
                     'fullname'           => array(
@@ -244,16 +271,12 @@ class Core {
                         'required' => true,
                         'type'     => 'boolean',
                     ),
+                    'product_id'         => array(
+                        'required' => true,
+                        'type'     => 'integer',
+                    ),
                     'installation_id'    => array(
                         'required' => true,
-                        'type'     => 'string',
-                    ),
-                    'site_language'      => array(
-                        'required' => false,
-                        'type'     => 'string',
-                    ),
-                    'timezone'           => array(
-                        'required' => false,
                         'type'     => 'string',
                     ),
                 ) )

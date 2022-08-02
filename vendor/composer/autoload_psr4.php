@@ -9,6 +9,8 @@ return array(
     'Commerce\\Backend\\PluginCore\\' => array($baseDir . '/backend/plugin-core'),
     'Commerce\\Backend\\Modules\\Setup\\' => array($baseDir . '/backend/modules/setup'),
     'Commerce\\Backend\\Modules\\Api\\V1\\Onboarding\\' => array($baseDir . '/backend/modules/api/v1/onboarding'),
+    'Commerce\\Backend\\Modules\\Api\\V1\\Models\\' => array($baseDir . '/backend/modules/api/v1/models'),
+    'Commerce\\Backend\\Modules\\Api\\V1\\Analytics\\' => array($baseDir . '/backend/modules/api/v1/analytics'),
     'Commerce\\Backend\\Modules\\Api\\V1\\Accounts\\' => array($baseDir . '/backend/modules/api/v1/accounts'),
     'Commerce\\Backend\\App\\Traits\\' => array($baseDir . '/backend/app/traits'),
     'Commerce\\Backend\\App\\Services\\Setup\\' => array($baseDir . '/backend/app/services/setup'),

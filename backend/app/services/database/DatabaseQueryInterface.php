@@ -30,7 +30,7 @@ interface DatabaseQueryInterface {
      *
      * @return DatabaseResponse
      */
-    public function update_row( string $table_name, array $data, array $where ): DatabaseResponse;
+    public function update_row( string $table_name, array $data, array $where, array $data_format, array $where_format ): DatabaseResponse;
 
     /**
      * Delete a row.
@@ -67,7 +67,7 @@ interface DatabaseQueryInterface {
      *
      * @param string $table_name
      * @param array $conditions
-     * @return void
+     * @return DatabaseResponse
      */
     public function select( string $table_name, array $conditions ): DatabaseResponse;
 

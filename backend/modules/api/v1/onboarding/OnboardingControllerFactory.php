@@ -14,7 +14,8 @@ class OnboardingControllerFactory {
 
         $query_service = DatabaseQuery::singletone();
 
-        $repository = new OnboardingRepository( $query_service );
-        return OnboardingController::singletone( $repository );
+        $repository = OnboardingRepository::singletone( $query_service );
+        $service    = new OnboardingService( $repository );
+        return OnboardingController::singletone( $service );
     }
 }

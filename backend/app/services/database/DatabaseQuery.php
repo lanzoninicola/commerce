@@ -35,6 +35,10 @@ class DatabaseQuery implements DatabaseQueryInterface {
      */
     public function insert_row( string $table_name, array $data, $format = null ): DatabaseResponse {
 
+        if ( DatabaseHelpers::table_exists( $table_name ) === false ) {
+            return new DatabaseResponseError( 'Table ' . $table_name . ' does not exist.' );
+        }
+
         global $wpdb;
 
         $result = $wpdb->insert(
@@ -114,19 +118,24 @@ class DatabaseQuery implements DatabaseQueryInterface {
     /**
      * Insert multiple rows.
      *
-     * @param [type] $table
+     * @param [type] $table_name
      * @param [type] $request - Data to insert
      * @return void
      *
      * @example Usage
-     * $table = 'table_name';
+     * $table_name = 'table_name';
      * $data = array(
     array( 'id' => 1, 'name' => 'John' ),
     array( 'id' => 2, 'name' => 'Doe' ),
     );
-    insert_multiple_rows( $table, $data );
+    insert_multiple_rows( $table_name, $data );
      */
-    public function insert_multiple_rows( $table, $request ) {
+    public function insert_multiple_rows( $table_name, $request ) {
+
+        if ( DatabaseHelpers::table_exists( $table_name ) === false ) {
+            return new DatabaseResponseError( 'Table ' . $table_name . ' does not exist.' );
+        }
+
         global $wpdb;
         $column_keys   = '';
         $column_values = '';
@@ -150,7 +159,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
             $column_values = rtrim( $column_values, ',' );
 
             if ( $first_key === $k ) {
-                $sql .= "INSERT INTO {$table} ($column_keys) VALUES ($column_values),";
+                $sql .= "INSERT INTO {$table_name} ($column_keys) VALUES ($column_values),";
             } elseif ( $last_key == $k ) {
                 $sql .= "($column_values)";
             } else {
@@ -191,14 +200,20 @@ class DatabaseQuery implements DatabaseQueryInterface {
      *
      * @return DatabaseResponse
      */
-    public function update_row( string $table_name, array $data, array $where ): DatabaseResponse {
+    public function update_row( string $table_name, array $data, array $where, array $data_format = array(), array $where_format = array() ): DatabaseResponse {
+
+        if ( DatabaseHelpers::table_exists( $table_name ) === false ) {
+            return new DatabaseResponseError( 'Table ' . $table_name . ' does not exist.' );
+        }
 
         global $wpdb;
 
         $result = $wpdb->update(
             $table_name,
             $data,
-            $where
+            $where,
+            empty( $data_format ) ? null : $data_format,
+            empty( $where_format ) ? null : $where_format,
         );
 
         /**
@@ -211,6 +226,10 @@ class DatabaseQuery implements DatabaseQueryInterface {
 
         /**
          * no rows were affected
+         *
+         * This result is returned when:
+         * - the condition is not met
+         * - the update operation is not performed because you are updating a column with the same value as the existing value
          */
 
         if ( is_array( $result ) && count( $result ) === 0 || $result === 0 ) {
@@ -227,6 +246,10 @@ class DatabaseQuery implements DatabaseQueryInterface {
      * @return DatabaseResponse
      */
     public function delete_row( string $table_name, array $where ): DatabaseResponse {
+
+        if ( DatabaseHelpers::table_exists( $table_name ) === false ) {
+            return new DatabaseResponseError( 'Table ' . $table_name . ' does not exist.' );
+        }
 
         global $wpdb;
 
@@ -263,6 +286,10 @@ class DatabaseQuery implements DatabaseQueryInterface {
      */
     public function get_row( string $table_name, string $where ): DatabaseResponse {
 
+        if ( DatabaseHelpers::table_exists( $table_name ) === false ) {
+            return new DatabaseResponseError( 'Table ' . $table_name . ' does not exist.' );
+        }
+
         global $wpdb;
 
         $result = $wpdb->get_row(
@@ -296,6 +323,10 @@ class DatabaseQuery implements DatabaseQueryInterface {
      * @return DatabaseResponse
      */
     public function get_all_rows( string $table_name ): DatabaseResponse {
+
+        if ( DatabaseHelpers::table_exists( $table_name ) === false ) {
+            return new DatabaseResponseError( 'Table ' . $table_name . ' does not exist.' );
+        }
 
         global $wpdb;
 
@@ -372,6 +403,10 @@ class DatabaseQuery implements DatabaseQueryInterface {
      * @return DatabaseResponse
      */
     public function select( string $table_name, array $conditions ): DatabaseResponse {
+
+        if ( DatabaseHelpers::table_exists( $table_name ) === false ) {
+            return new DatabaseResponseError( 'Table ' . $table_name . ' does not exist.' );
+        }
 
         global $wpdb;
 

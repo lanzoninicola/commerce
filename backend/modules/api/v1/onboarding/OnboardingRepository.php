@@ -4,9 +4,7 @@ namespace Commerce\Backend\Modules\Api\V1\Onboarding;
 
 use Commerce\Backend\App\Common\Error;
 use Commerce\Backend\App\Services\Database\DatabaseQueryInterface;
-use Commerce\Backend\App\Services\Database\DatabaseResponseEmpty;
 use Commerce\Backend\App\Services\Database\DatabaseResponseError;
-use Commerce\Backend\App\Services\Database\DatabaseTransaction;
 
 class OnboardingRepository {
 
@@ -44,103 +42,101 @@ class OnboardingRepository {
     }
 
     /**
-     * Create the model and insert a record in the table countdowns.
+     * Create a new WP User
      *
-     * @param OnboardingModel $data
-     * @return Error | new user id
+     * @param string $email
+     * @param string $fullname
+     * @return int|Error The newly created user's ID or a WP_Error object if the user could not
+     *                      be created.
      */
-    public function insert( object $onboarding_model ) {
+    public function create_wp_user( string $email, string $fullname ) {
 
-        $wp_user_id = null;
-
-        /** check if the user exists by email */
-        $wp_user_id = get_user_by( 'email', $onboarding_model->email );
-
-        /** if the user exist, get the user id  */
-
-        if ( $wp_user_id instanceof \WP_User ) {
-            $wp_user_id = $wp_user_id->ID;
-        }
-
-        /** if the user doesn't exist, create it  */
-        DatabaseTransaction::start();
-
-        if ( $wp_user_id === false ) {
-
-            $wp_user_id = wp_insert_user( array(
-                'user_login' => $onboarding_model->email,
-                'user_pass'  => wp_generate_password(),
-                'user_email' => $onboarding_model->email,
-                'first_name' => $onboarding_model->fullname,
-                'role'       => 'subscriber',
-            ) );
-
-        }
+        $wp_user_id = wp_insert_user( array(
+            'user_login' => $email,
+            'user_pass'  => wp_generate_password(),
+            'user_email' => $email,
+            'first_name' => $fullname,
+            'role'       => 'subscriber',
+        ) );
 
         if ( is_wp_error( $wp_user_id ) ) {
-            DatabaseTransaction::rollback();
-
-            return new Error( 'wp_user_insert_failed', $wp_user_id->get_error_message(), $wp_user_id->get_error_data() );
-        } else {
-
-            DatabaseTransaction::commit();
-        }
-
-        // TODO check if the user has already given the consents to the terms and privacy policy, if so does not insert the record and do not present in the UI the consent form
-
-        $result = $this->query_service->insert_batch(
-            array(
-                'wp_comm_user_marketing'         => array(
-                    'wp_user_id'         => $wp_user_id,
-                    'consent_newsletter' => $onboarding_model->consent_newsletter,
-                    'consent_terms'      => $onboarding_model->consent_terms,
-                    'consent_privacy'    => $onboarding_model->consent_privacy,
-                ),
-                'wp_comm_products_installations' => array(
-                    'installation_id' => $onboarding_model->installation_id,
-                    'wp_user_id'      => $wp_user_id,
-                    'product_id'      => $onboarding_model->product_id,
-                    'site_url'        => $onboarding_model->site_url,
-                    'site_language'   => $onboarding_model->site_language,
-                    'site_timezone'   => $onboarding_model->site_timezone,
-                ),
-            )
-        );
-
-        if ( $result instanceof DatabaseResponseError || $result instanceof DatabaseResponseEmpty ) {
-            return new Error( 'insert_onboarding_error', 'Error inserting new onboarding', $result->get_payload() );
+            return new Error(
+                'wp_user_insert_failed',
+                $wp_user_id->get_error_message(),
+                $wp_user_id->get_error_data()
+            );
         }
 
         return $wp_user_id;
 
     }
 
-    public function update( array $data, int $id ) {}
+    /**
+     * Match the product installation with the user.
+     *
+     * @param integer $product_id
+     * @param string $installation_id
+     * @param integer $wp_user_id
+     * @return Error|true True if the record was inserted, Error otherwise.
+     */
+    public function match_product_installation_with_user(
+        int $product_id,
+        string $installation_id,
+        int $wp_user_id
+    ) {
 
-    public function delete( int $id ) {}
-
-    public function find_all() {}
-
-    public function find_by_id( int $id ) {}
-
-    public function find_by_conditions( array $conditions ) {}
-
-    public function find_by_installation_id( string $installation_id ) {
-
-        $result = $this->query_service->select(
+        $result = $this->query_service->update_row(
             'wp_comm_products_installations',
             array(
+                'wp_user_id' => $wp_user_id,
+            ),
+            array(
                 'installation_id' => $installation_id,
+                'product_id'      => $product_id,
+            ),
+            array(),
+            array( '%s', '%d' )
+        );
+
+        if ( $result instanceof DatabaseResponseError ) {
+            return new Error(
+                'update_product_installation_error',
+                'Error updating the product installation with the wp_user_id',
+                $result->get_payload()
+            );
+        }
+
+        return true;
+
+    }
+
+    public function add_user_marketing_preferences(
+        int $wp_user_id,
+        int $consent_newsletter,
+        int $consent_terms,
+        int $consent_privacy
+    ) {
+
+        $result = $this->query_service->insert_row(
+            'wp_comm_user_marketing_preferences',
+            array(
+                'wp_user_id'         => $wp_user_id,
+                'consent_newsletter' => $consent_newsletter,
+                'consent_terms'      => $consent_terms,
+                'consent_privacy'    => $consent_privacy,
             )
         );
 
-        if ( $result instanceof DatabaseResponseError || $result instanceof DatabaseResponseEmpty ) {
-            return new Error( 'find_by_installation_id_error', 'Error finding by installation id', $result->get_payload() );
+        if ( $result instanceof DatabaseResponseError ) {
+            return new Error(
+                'insert_user_marketing_preferences_error',
+                'Error adding new user marketing preferences',
+                $result->get_payload()
+            );
         }
 
-        var_dump( $result );
-
         return $result;
+
     }
 
 }
