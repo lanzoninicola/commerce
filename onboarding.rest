@@ -1,15 +1,8 @@
 ### List all onboarding
 GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding
 
-### Onboarding by installation_id   
-GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding/3be6607b-0f40-11ed-9cce-040e3caabadb
-
-
-### Get account by email
-GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/account?email=lanzoni.nicola@gmail.com
-
 ### Get the installation by id
-GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/analytics/installations/3be6607b-0f40-11ed-9cce-040e3caabadb
+GET http://localhost/bb-melhor-envio/wp-json/commerce/v1/analytics/installations/7cg9997b-0f40-11ed-9cce-040e3caabadb
 
 ### Track new installation
 POST http://localhost/bb-melhor-envio/wp-json/commerce/v1/analytics/installations
