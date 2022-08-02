@@ -2,6 +2,9 @@
 
 namespace Commerce;
 
+use Commerce\Config\Configurator;
+use Commerce\Core\ServiceProvider;
+
 /**
  * The plugin bootstrap file
  *
@@ -36,8 +39,6 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
     require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
-use Commerce\Backend\PluginCore\Core;
-
 define( 'COMMERCE_PLUGIN_ID', '1' );
 define( 'COMMERCE_PLUGIN_NAME', 'commerce' );
 define( 'COMMERCE_PLUGIN_VERSION', '1.0.1' );
@@ -45,9 +46,9 @@ define( 'COMMERCE_PLUGIN_DB_PREFIX', 'comm' );
 define( 'COMMERCE_PLUGIN_BASE_URL_PATH', plugin_dir_url( __FILE__ ) );
 define( 'COMMERCE_TEXT_DOMAIN', 'commerce' );
 
-register_activation_hook( __FILE__, array( 'Commerce\Backend\PluginCore\Activator', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'Commerce\Backend\PluginCore\Deactivator', 'deactivate' ) );
-register_uninstall_hook( __FILE__, array( 'Commerce\Backend\PluginCore\Uninstaller', 'uninstall' ) );
+register_activation_hook( __FILE__, array( 'Commerce\Client\Setup\Activator', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'Commerce\Client\Setup\Deactivator', 'deactivate' ) );
+register_uninstall_hook( __FILE__, array( 'Commerce\Client\Setup\Uninstaller', 'uninstall' ) );
 
 /**
  * Begins execution of the plugin.
@@ -60,13 +61,10 @@ register_uninstall_hook( __FILE__, array( 'Commerce\Backend\PluginCore\Uninstall
  */
 function run_plugin() {
 
-    /**
-     * The core plugin class that is used to define internationalization,
-     * admin-specific hooks, and public-facing site hooks.
-     */
+    $service_provider = new ServiceProvider();
 
-    $plugin = new Core();
-    $plugin->run();
+    new Configurator( $service_provider );
+    $service_provider->run();
 
 }
 

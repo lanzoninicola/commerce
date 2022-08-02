@@ -3,21 +3,22 @@
   "autoload": {
     "psr-4": {
       "Commerce\\": "./",
-      "Commerce\\Backend\\PluginCore\\": "./backend/plugin-core",
-      "Commerce\\Backend\\App\\Interfaces\\": "./backend/app/interfaces",
-      "Commerce\\Backend\\App\\Services\\": "./backend/app/services",
-      "Commerce\\Backend\\App\\Services\\Database\\": "./backend/app/services/database",
-      "Commerce\\Backend\\App\\Services\\Setup\\": "./backend/app/services/setup",
-      "Commerce\\Backend\\App\\Services\\RestApi\\": "./backend/app/services/rest-api",
-      "Commerce\\Backend\\App\\Services\\ScriptLocalizer\\": "./backend/app/services/script-localizer",
-      "Commerce\\Backend\\App\\Services\\Logger\\": "./backend/app/services/logger",
-      "Commerce\\Backend\\App\\Traits\\": "./backend/app/traits",
-      "Commerce\\Backend\\App\\Common\\": "./backend/app/common",
-      "Commerce\\Backend\\Modules\\Setup\\": "./backend/modules/setup",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Onboarding\\": "./backend/modules/api/v1/onboarding",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Accounts\\": "./backend/modules/api/v1/accounts",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Analytics\\": "./backend/modules/api/v1/analytics",
-      "Commerce\\Backend\\Modules\\Api\\V1\\Models\\": "./backend/modules/api/v1/models"
+      "Commerce\\Core\\": "./core",
+      "Commerce\\App\\Interfaces\\": "./app/interfaces",
+      "Commerce\\App\\Services\\": "./app/services",
+      "Commerce\\App\\Services\\Database\\": "./app/services/database",
+      "Commerce\\App\\Services\\RestApi\\": "./app/services/rest-api",
+      "Commerce\\App\\Services\\ScriptLocalizer\\": "./app/services/script-localizer",
+      "Commerce\\App\\Services\\Logger\\": "./app/services/logger",
+      "Commerce\\App\\Traits\\": "./app/traits",
+      "Commerce\\App\\Functions\\": "./app/functions",
+      "Commerce\\App\\Common\\": "./app/common",
+      "Commerce\\Config\\": "./config",
+      "Commerce\\Client\\Backend\\Setup\\": ".client/backend/setup",
+      "Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\": ".client/backend/api/v1/onboarding",
+      "Commerce\\Client\\Backend\\Api\\V1\\Accounts\\": ".client/backend/api/v1/accounts",
+      "Commerce\\Client\\Backend\\Api\\V1\\Analytics\\": ".client/backend/api/v1/analytics",
+      "Commerce\\Client\\Backend\\Api\\V1\\Models\\": ".client/backend/api/v1/models"
     }
   },
   "authors": [

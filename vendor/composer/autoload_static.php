@@ -9,85 +9,85 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
     public static $prefixLengthsPsr4 = array (
         'C' => 
         array (
-            'Commerce\\Backend\\PluginCore\\' => 28,
-            'Commerce\\Backend\\Modules\\Setup\\' => 31,
-            'Commerce\\Backend\\Modules\\Api\\V1\\Onboarding\\' => 43,
-            'Commerce\\Backend\\Modules\\Api\\V1\\Models\\' => 39,
-            'Commerce\\Backend\\Modules\\Api\\V1\\Analytics\\' => 42,
-            'Commerce\\Backend\\Modules\\Api\\V1\\Accounts\\' => 41,
-            'Commerce\\Backend\\App\\Traits\\' => 28,
-            'Commerce\\Backend\\App\\Services\\Setup\\' => 36,
-            'Commerce\\Backend\\App\\Services\\ScriptLocalizer\\' => 46,
-            'Commerce\\Backend\\App\\Services\\RestApi\\' => 38,
-            'Commerce\\Backend\\App\\Services\\Logger\\' => 37,
-            'Commerce\\Backend\\App\\Services\\Database\\' => 39,
-            'Commerce\\Backend\\App\\Services\\' => 30,
-            'Commerce\\Backend\\App\\Interfaces\\' => 32,
-            'Commerce\\Backend\\App\\Common\\' => 28,
+            'Commerce\\Core\\' => 14,
+            'Commerce\\Client\\Backend\\Setup\\' => 30,
+            'Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\' => 42,
+            'Commerce\\Client\\Backend\\Api\\V1\\Models\\' => 38,
+            'Commerce\\Client\\Backend\\Api\\V1\\Analytics\\' => 41,
+            'Commerce\\Client\\Backend\\Api\\V1\\Accounts\\' => 40,
+            'Commerce\\App\\Traits\\' => 20,
+            'Commerce\\App\\Services\\ScriptLocalizer\\' => 38,
+            'Commerce\\App\\Services\\RestApi\\' => 30,
+            'Commerce\\App\\Services\\Logger\\' => 29,
+            'Commerce\\App\\Services\\Database\\' => 31,
+            'Commerce\\App\\Services\\' => 22,
+            'Commerce\\App\\Interfaces\\' => 24,
+            'Commerce\\App\\Functions\\' => 23,
+            'Commerce\\App\\Common\\' => 20,
             'Commerce\\' => 9,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Commerce\\Backend\\PluginCore\\' => 
+        'Commerce\\Core\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/plugin-core',
+            0 => __DIR__ . '/../..' . '/core',
         ),
-        'Commerce\\Backend\\Modules\\Setup\\' => 
+        'Commerce\\Client\\Backend\\Setup\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/modules/setup',
+            0 => __DIR__ . '/../..' . '/.client/backend/setup',
         ),
-        'Commerce\\Backend\\Modules\\Api\\V1\\Onboarding\\' => 
+        'Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/modules/api/v1/onboarding',
+            0 => __DIR__ . '/../..' . '/.client/backend/api/v1/onboarding',
         ),
-        'Commerce\\Backend\\Modules\\Api\\V1\\Models\\' => 
+        'Commerce\\Client\\Backend\\Api\\V1\\Models\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/modules/api/v1/models',
+            0 => __DIR__ . '/../..' . '/.client/backend/api/v1/models',
         ),
-        'Commerce\\Backend\\Modules\\Api\\V1\\Analytics\\' => 
+        'Commerce\\Client\\Backend\\Api\\V1\\Analytics\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/modules/api/v1/analytics',
+            0 => __DIR__ . '/../..' . '/.client/backend/api/v1/analytics',
         ),
-        'Commerce\\Backend\\Modules\\Api\\V1\\Accounts\\' => 
+        'Commerce\\Client\\Backend\\Api\\V1\\Accounts\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/modules/api/v1/accounts',
+            0 => __DIR__ . '/../..' . '/.client/backend/api/v1/accounts',
         ),
-        'Commerce\\Backend\\App\\Traits\\' => 
+        'Commerce\\App\\Traits\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/app/traits',
+            0 => __DIR__ . '/../..' . '/app/traits',
         ),
-        'Commerce\\Backend\\App\\Services\\Setup\\' => 
+        'Commerce\\App\\Services\\ScriptLocalizer\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/app/services/setup',
+            0 => __DIR__ . '/../..' . '/app/services/script-localizer',
         ),
-        'Commerce\\Backend\\App\\Services\\ScriptLocalizer\\' => 
+        'Commerce\\App\\Services\\RestApi\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/app/services/script-localizer',
+            0 => __DIR__ . '/../..' . '/app/services/rest-api',
         ),
-        'Commerce\\Backend\\App\\Services\\RestApi\\' => 
+        'Commerce\\App\\Services\\Logger\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/app/services/rest-api',
+            0 => __DIR__ . '/../..' . '/app/services/logger',
         ),
-        'Commerce\\Backend\\App\\Services\\Logger\\' => 
+        'Commerce\\App\\Services\\Database\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/app/services/logger',
+            0 => __DIR__ . '/../..' . '/app/services/database',
         ),
-        'Commerce\\Backend\\App\\Services\\Database\\' => 
+        'Commerce\\App\\Services\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/app/services/database',
+            0 => __DIR__ . '/../..' . '/app/services',
         ),
-        'Commerce\\Backend\\App\\Services\\' => 
+        'Commerce\\App\\Interfaces\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/app/services',
+            0 => __DIR__ . '/../..' . '/app/interfaces',
         ),
-        'Commerce\\Backend\\App\\Interfaces\\' => 
+        'Commerce\\App\\Functions\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/app/interfaces',
+            0 => __DIR__ . '/../..' . '/app/functions',
         ),
-        'Commerce\\Backend\\App\\Common\\' => 
+        'Commerce\\App\\Common\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/backend/app/common',
+            0 => __DIR__ . '/../..' . '/app/common',
         ),
         'Commerce\\' => 
         array (
