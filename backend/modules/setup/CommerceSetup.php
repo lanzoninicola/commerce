@@ -51,7 +51,7 @@ class CommerceSetup implements PluginSetupInterface {
             'products_installations'      => "CREATE TABLE `%table_name%` (
                 id INT NOT NULL AUTO_INCREMENT,
                 product_id bigint(20) unsigned NOT NULL,
-                installation_id BINARY(16) NOT NULL,
+                installation_id VARCHAR(255) NOT NULL,
                 site_url VARCHAR(255) NULL,
                 site_language VARCHAR(100) NULL,
                 site_timezone VARCHAR(100) NULL,
