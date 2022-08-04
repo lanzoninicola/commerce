@@ -18,6 +18,27 @@ class RestApiRoutesService {
     private $routes = array();
 
     /**
+     * The Validator Middleware.
+     *
+     * @var RestApiValidatorMiddlewareInterface
+     */
+    private $validator_middleware;
+
+    /**
+     * The Sanitizer Middleware.
+     *
+     * @var RestApiSanitizerMiddlewareInterface
+     */
+    private $sanitizer_middleware;
+
+    public function __construct() {
+
+        $this->validator_middleware = new RestApiValidatorMiddleware();
+        $this->sanitizer_middleware = new RestApiSanitizerMiddleware();
+
+    }
+
+    /**
      * Adds a new RestApiRoutes collection to the collection of routes.
      *
      * @param RestApiRoutes $route The route to be added.
@@ -25,6 +46,27 @@ class RestApiRoutesService {
     public function add_routes( RestApiRoutes $routes ) {
 
         $this->routes[] = $routes;
+
+    }
+
+    /**
+     * Sets a custom Validator middleware to user for validate the request arguments.
+     *
+     * @param RestApiValidatorMiddlewareInterface $validator_middleware The Validator middleware.
+     */
+    public function set_custom_validator_middleware( RestApiValidatorMiddlewareInterface $validator_middleware ) {
+
+        $this->validator_middleware = $validator_middleware;
+
+    }
+
+    /**
+     * Set a custom sanitizer middleware to use for sanitizing the request arguments.
+     * @param RestApiSanitizerMiddlewareInterface $sanitizer_middleware The sanitizer middleware.
+     */
+    public function set_custom_sanitizer_middleware( RestApiSanitizerMiddlewareInterface $sanitizer_middleware ) {
+
+        $this->sanitizer_middleware = $sanitizer_middleware;
 
     }
 
@@ -60,7 +102,7 @@ class RestApiRoutesService {
                     'methods'             => $endpoint->verb(),
                     'callback'            => $endpoint->callback(),
                     'permission_callback' => $this->get_permission_callback( $endpoint->capability() ),
-                    'args'                => $this->get_validation_sanitization_args( $endpoint->guard_object() ),
+                    'args'                => $this->get_validation_sanitization_args( $endpoint->rules() ),
                 ) );
 
             }
@@ -77,21 +119,20 @@ class RestApiRoutesService {
      *
      * @param string $full_api_root_path The full api root path. "{namespace(aka. plugin-name)}/{version}".)}"
      * @param string $url The url of the endpoint. The part after the root path.
-     * @param object $guard_object The guard object.
+     * @param object $middleware_object The guard object.
      *
      * @return array
      */
-    private function get_validation_sanitization_args( object $guard_object ) {
+    private function get_validation_sanitization_args( array $rules ) {
 
         $args = array();
-
-        $rules = $guard_object->rules();
 
         foreach ( $rules as $arg => $rule ) {
 
             $args[$arg] = array(
-                'sanitize_callback' => array( $guard_object, 'sanitize_request_arg' ),
-                'validate_callback' => array( $guard_object, 'validate_request_arg' ),
+                'required'          => isset( $rule['required'] ) ? $rule['required'] : false,
+                'sanitize_callback' => array( $this->sanitizer_middleware, 'sanitize_request_arg' ),
+                'validate_callback' => array( $this->validator_middleware, 'validate_request_arg' ),
             );
 
         }

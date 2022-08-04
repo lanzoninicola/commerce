@@ -7,12 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Commerce\\Core\\' => array($baseDir . '/core'),
-    'Commerce\\Config\\' => array($baseDir . '/config'),
-    'Commerce\\Client\\Backend\\Setup\\' => array($baseDir . '/.client/backend/setup'),
-    'Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\' => array($baseDir . '/.client/backend/api/v1/onboarding'),
-    'Commerce\\Client\\Backend\\Api\\V1\\Models\\' => array($baseDir . '/.client/backend/api/v1/models'),
-    'Commerce\\Client\\Backend\\Api\\V1\\Analytics\\' => array($baseDir . '/.client/backend/api/v1/analytics'),
-    'Commerce\\Client\\Backend\\Api\\V1\\Accounts\\' => array($baseDir . '/.client/backend/api/v1/accounts'),
+    'Commerce\\Client\\Config\\' => array($baseDir . '/client/config'),
+    'Commerce\\Client\\Backend\\Setup\\' => array($baseDir . '/client/backend/setup'),
+    'Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\' => array($baseDir . '/client/backend/api/v1/onboarding'),
+    'Commerce\\Client\\Backend\\Api\\V1\\Models\\' => array($baseDir . '/client/backend/api/v1/models'),
+    'Commerce\\Client\\Backend\\Api\\V1\\Analytics\\' => array($baseDir . '/client/backend/api/v1/analytics'),
+    'Commerce\\Client\\Backend\\Api\\V1\\Accounts\\' => array($baseDir . '/client/backend/api/v1/accounts'),
     'Commerce\\App\\Traits\\' => array($baseDir . '/app/traits'),
     'Commerce\\App\\Services\\ScriptLocalizer\\' => array($baseDir . '/app/services/script-localizer'),
     'Commerce\\App\\Services\\RestApi\\' => array($baseDir . '/app/services/rest-api'),

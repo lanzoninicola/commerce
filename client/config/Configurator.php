@@ -1,9 +1,8 @@
 <?php
 
-namespace Commerce\Config;
+namespace Commerce\Client\Config;
 
 use Commerce\App\Services\RestApi\RestApiEndpoint;
-use Commerce\App\Services\RestApi\RestApiEndpointGuard;
 use Commerce\App\Services\RestApi\RestApiRoutes;
 use Commerce\App\Services\RestApi\RestApiRoutesService;
 use Commerce\App\Services\ScriptLocalizer\ScriptAdminLocalizerService;
@@ -29,7 +28,7 @@ class Configurator implements PluginConfigurable {
      * Adding the shortcodes to Wordpress
      *
      */
-    public function define_shortcodes( ShortcodesLoader $shortcode_loaders ) {
+    public function define_shortcodes( ShortcodesLoader $shortcodes_loader ) {
 
     }
 
@@ -99,12 +98,12 @@ class Configurator implements PluginConfigurable {
             new RestApiEndpoint( '/analytics/installations/(?P<installation_id>[a-zA-Z0-9-]+)', 'GET',
                 array( AnalyticsControllerFactory::create(), 'find_by_product_installation_id' ),
                 'public',
-                new RestApiEndpointGuard()
+                array()
             ),
             new RestApiEndpoint( '/analytics/installations', 'POST',
                 array( AnalyticsControllerFactory::create(), 'new_product_installation' ),
                 'public',
-                new RestApiEndpointGuard( array(
+                array(
                     'product_id'      => array(
                         'required' => true,
                         'type'     => 'integer',
@@ -125,12 +124,12 @@ class Configurator implements PluginConfigurable {
                         'required' => false,
                         'type'     => 'string',
                     ),
-                ) )
+                )
             ),
             new RestApiEndpoint( '/onboarding', 'POST',
                 array( OnboardingControllerFactory::create(), 'new_onboarding' ),
                 'public',
-                new RestApiEndpointGuard( array(
+                array(
                     'fullname'           => array(
                         'required' => true,
                         'type'     => 'string',
@@ -158,18 +157,17 @@ class Configurator implements PluginConfigurable {
                     'installation_id'    => array(
                         'required' => true,
                         'type'     => 'string',
-                    ),
-                ) )
+                    ) )
             ),
             new RestApiEndpoint( '/account', 'GET',
                 array( AccountControllerFactory::create(), 'get_account' ),
                 'public',
-                new RestApiEndpointGuard( array(
+                array(
                     'email' => array(
                         'required' => true,
                         'type'     => 'string:email',
                     ),
-                ) )
+                )
             ),
         );
 

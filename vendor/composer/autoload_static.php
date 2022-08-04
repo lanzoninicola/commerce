@@ -10,7 +10,7 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
         'C' => 
         array (
             'Commerce\\Core\\' => 14,
-            'Commerce\\Config\\' => 16,
+            'Commerce\\Client\\Config\\' => 23,
             'Commerce\\Client\\Backend\\Setup\\' => 30,
             'Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\' => 42,
             'Commerce\\Client\\Backend\\Api\\V1\\Models\\' => 38,
@@ -34,29 +34,29 @@ class ComposerStaticInit57148f123bba56101d5df4eb67b5b2db
         array (
             0 => __DIR__ . '/../..' . '/core',
         ),
-        'Commerce\\Config\\' => 
+        'Commerce\\Client\\Config\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/config',
+            0 => __DIR__ . '/../..' . '/client/config',
         ),
         'Commerce\\Client\\Backend\\Setup\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/.client/backend/setup',
+            0 => __DIR__ . '/../..' . '/client/backend/setup',
         ),
         'Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/.client/backend/api/v1/onboarding',
+            0 => __DIR__ . '/../..' . '/client/backend/api/v1/onboarding',
         ),
         'Commerce\\Client\\Backend\\Api\\V1\\Models\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/.client/backend/api/v1/models',
+            0 => __DIR__ . '/../..' . '/client/backend/api/v1/models',
         ),
         'Commerce\\Client\\Backend\\Api\\V1\\Analytics\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/.client/backend/api/v1/analytics',
+            0 => __DIR__ . '/../..' . '/client/backend/api/v1/analytics',
         ),
         'Commerce\\Client\\Backend\\Api\\V1\\Accounts\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/.client/backend/api/v1/accounts',
+            0 => __DIR__ . '/../..' . '/client/backend/api/v1/accounts',
         ),
         'Commerce\\App\\Traits\\' => 
         array (

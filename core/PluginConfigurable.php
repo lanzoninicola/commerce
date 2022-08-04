@@ -18,7 +18,7 @@ interface PluginConfigurable {
      * Adding the shortcodes to Wordpress
      *
      */
-    public function define_shortcodes( ShortcodesLoader $shortcode_loaders );
+    public function define_shortcodes( ShortcodesLoader $shortcodes_loader );
 
     /**
      * Defines all the scripts/styles that will be used in the plugin.

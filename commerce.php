@@ -2,9 +2,8 @@
 
 namespace Commerce;
 
-use Commerce\Config\Configurator;
+use Commerce\Client\Config\Configurator;
 use Commerce\Core\Init;
-use Commerce\Core\ServiceProvider;
 
 /**
  * The plugin bootstrap file

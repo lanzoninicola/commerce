@@ -1,6 +1,6 @@
 <?php
 
-namespace Commerce\Config;
+namespace Commerce\Client\Config;
 
 use Commerce\Core\PluginSetup;
 

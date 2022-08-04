@@ -13,12 +13,12 @@
       "Commerce\\App\\Traits\\": "./app/traits",
       "Commerce\\App\\Functions\\": "./app/functions",
       "Commerce\\App\\Common\\": "./app/common",
-      "Commerce\\Config\\": "./config",
-      "Commerce\\Client\\Backend\\Setup\\": ".client/backend/setup",
-      "Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\": ".client/backend/api/v1/onboarding",
-      "Commerce\\Client\\Backend\\Api\\V1\\Accounts\\": ".client/backend/api/v1/accounts",
-      "Commerce\\Client\\Backend\\Api\\V1\\Analytics\\": ".client/backend/api/v1/analytics",
-      "Commerce\\Client\\Backend\\Api\\V1\\Models\\": ".client/backend/api/v1/models"
+      "Commerce\\Client\\Config\\": "./client/config",
+      "Commerce\\Client\\Backend\\Setup\\": "./client/backend/setup",
+      "Commerce\\Client\\Backend\\Api\\V1\\Onboarding\\": "./client/backend/api/v1/onboarding",
+      "Commerce\\Client\\Backend\\Api\\V1\\Accounts\\": "./client/backend/api/v1/accounts",
+      "Commerce\\Client\\Backend\\Api\\V1\\Analytics\\": "./client/backend/api/v1/analytics",
+      "Commerce\\Client\\Backend\\Api\\V1\\Models\\": "./client/backend/api/v1/models"
     }
   },
   "authors": [

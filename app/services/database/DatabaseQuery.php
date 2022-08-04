@@ -31,7 +31,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
      * Use the identity operator (===) to check for errors: (e.g., false === $result),
      * and whether any rows were affected (e.g., 0 === $result).
      *
-     * @return DatabaseResponse
+     * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      */
     public function insert_row( string $table_name, array $data, $format = null ): DatabaseResponse {
 
@@ -78,6 +78,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
      * @param array $tables_inserts array of tables and inserts
      * @param bool $on_error_rollback If true start a transaction and rollback on error.
      *
+     * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      */
     public function insert_batch( array $tables_inserts, bool $on_error_rollback = true ): DatabaseResponse {
 
@@ -198,7 +199,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
     /**
      * Update a row.
      *
-     * @return DatabaseResponse
+     * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      */
     public function update_row( string $table_name, array $data, array $where, array $data_format = array(), array $where_format = array() ): DatabaseResponse {
 
@@ -243,7 +244,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
     /**
      * Delete a row.
      *
-     * @return DatabaseResponse
+     * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      */
     public function delete_row( string $table_name, array $where ): DatabaseResponse {
 
@@ -282,7 +283,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
     /**
      * Get a row.
      *
-     * @return DatabaseResponse
+     * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotFound|DatabaseResponseSuccess
      */
     public function get_row( string $table_name, string $where ): DatabaseResponse {
 
@@ -320,7 +321,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
     /**
      * Get all rows.
      *
-     * @return DatabaseResponse
+     * @return DatabaseResponse DatabaseResponseError|DatabaseResponseEmpty|DatabaseResponseSuccess
      */
     public function get_all_rows( string $table_name ): DatabaseResponse {
 
@@ -359,7 +360,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
     /**
      * Make a generic query given as parameter.
      *
-     * @return DatabaseResponse
+     * @return DatabaseResponse DatabaseResponseError|DatabaseResponseEmpty|DatabaseResponseSuccess
      */
     public function query( string $sql, ?string $table_name = null ): DatabaseResponse {
 
@@ -400,7 +401,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
      *
      * @param string $table_name
      * @param array $conditions
-     * @return DatabaseResponse
+     * @return DatabaseResponse DatabaseResponseError|DatabaseResponseEmpty|DatabaseResponseSuccess
      */
     public function select( string $table_name, array $conditions ): DatabaseResponse {
 

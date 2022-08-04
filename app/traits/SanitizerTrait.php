@@ -16,15 +16,24 @@ trait SanitizerTrait {
     public function bulk_sanitize( array $rules, array $data ) {
 
         if ( empty( $rules ) ) {
-            return new Error( 'no_rules', 'SanitizerTrait - sanitize() - No rules has been provided.' );
+            return new Error(
+                'no_rules',
+                'SanitizerTrait - sanitize() - No rules has been provided.'
+            );
         }
 
         if ( count( $rules ) !== count( $data ) ) {
-            return new Error( 'mismatching_rules', 'SanitizerTrait - sanitize() - The number of rules and data must be the same.' );
+            return new Error(
+                'mismatching_rules',
+                'SanitizerTrait - sanitize() - The number of rules and data must be the same.'
+            );
         }
 
         if ( count( array_diff_key( $rules, $data ) ) ) {
-            return new Error( 'invalid_data', 'SanitizerTrait - required_fields() - The rules and data must have the same keys.' );
+            return new Error(
+                'invalid_data',
+                'SanitizerTrait - required_fields() - The rules and data must have the same keys.'
+            );
         }
 
         $sanitized_fields = array();
@@ -54,7 +63,7 @@ trait SanitizerTrait {
             return $this->sanitize_string( $value );
         } else
 
-        if ( $type === 'int' ) {
+        if ( $type === 'int' || $type === 'integer' || $type === 'number' || $type === 'numeric' ) {
             return $this->sanitize_int( $value );
         } else
 
@@ -68,7 +77,16 @@ trait SanitizerTrait {
 
         if ( $type === 'email' ) {
             return sanitize_email( $value );
+        } else
+
+        if ( $type === 'json_encode' ) {
+            return $this->sanitize_json( $value, 'encode' );
+        } else
+
+        if ( $type === 'json_decode' ) {
+            return $this->sanitize_json( $value, 'decode' );
         } else {
+
             return $value;
         }
 
@@ -116,6 +134,23 @@ trait SanitizerTrait {
     private function sanitize_datetime( $value ): string {
 
         return date( 'Y-m-d H:i:s', strtotime( $value ) );
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $value
+     * @param string $action Either 'encode' or 'decode'.
+     * @return void
+     */
+    private function sanitize_json( $value, string $action ) {
+
+        if ( $action === 'encode' ) {
+            return json_encode( $value );
+        }
+
+        return json_decode( $value );
+
     }
 
 }
