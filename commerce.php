@@ -39,15 +39,37 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
     require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
+function get_plugin_id() {
+    return '999';
+}
+
 function get_plugin_name() {
     return 'commerce';
 }
 
-define( 'COMMERCE_PLUGIN_ID', '1' );
-define( 'COMMERCE_PLUGIN_VERSION', '1.0.1' );
-define( 'COMMERCE_PLUGIN_DB_PREFIX', 'comm' );
-define( 'COMMERCE_PLUGIN_BASE_URL_PATH', plugin_dir_url( __FILE__ ) );
-define( 'COMMERCE_TEXT_DOMAIN', 'commerce' );
+function get_plugin_version() {
+    return '1.0.1';
+}
+
+function get_plugin_db_prefix() {
+    return 'ckdo';
+}
+
+function get_plugin_base_url_path() {
+    return plugin_dir_url( __FILE__ );
+}
+
+function get_plugin_text_domain() {
+    return 'commerce';
+}
+
+function get_plugin_api_base_url() {
+    return home_url( '/wp-json/commerce/v1' );
+}
+
+function get_commerce_api_base_url() {
+    return 'http://localhost/bb-melhor-envio/wp-json/commerce/v1';
+}
 
 register_activation_hook( __FILE__, array( 'Commerce\Client\Config\Activator', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Commerce\Client\Config\Deactivator', 'deactivate' ) );
@@ -65,9 +87,7 @@ register_uninstall_hook( __FILE__, array( 'Commerce\Client\Config\Uninstaller', 
 function run_plugin() {
 
     $config = new Configurator();
-
-    $init = new Init( $config );
-
+    $init   = new Init( $config );
     $init->run();
 
 }
