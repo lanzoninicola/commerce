@@ -54,15 +54,16 @@ class OnboardingController {
 
         if ( $result instanceof Error ) {
 
-            return RestApiResponseError::error( $result->get_error_message(), $result->get_error_data() );
+            return RestApiResponseError::error(
+                $result->message(),
+                $result->data()
+            );
         }
 
         return RestApiResponseSuccess::success( 'Onboarding success', array(
 
             'operation' => $operation,
-            'payload'   => array(
-                'user_id' => $result,
-            ),
+            'payload'   => null,
         ) );
 
     }

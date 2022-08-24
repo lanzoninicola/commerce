@@ -24,4 +24,14 @@ class Helpers {
         return is_a( $value, 'Commerce\App\Common\Error' );
     }
 
+    /**
+     * Check if the option exists in the database.
+     *
+     * @param string $option_name
+     * @return void
+     */
+    public static function option_exists( $option_name ) {
+        return (bool) get_option( $option_name ) !== false;
+    }
+
 }

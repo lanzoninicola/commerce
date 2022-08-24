@@ -39,16 +39,19 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
     require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
+function get_plugin_name() {
+    return 'commerce';
+}
+
 define( 'COMMERCE_PLUGIN_ID', '1' );
-define( 'COMMERCE_PLUGIN_NAME', 'commerce' );
 define( 'COMMERCE_PLUGIN_VERSION', '1.0.1' );
 define( 'COMMERCE_PLUGIN_DB_PREFIX', 'comm' );
 define( 'COMMERCE_PLUGIN_BASE_URL_PATH', plugin_dir_url( __FILE__ ) );
 define( 'COMMERCE_TEXT_DOMAIN', 'commerce' );
 
-register_activation_hook( __FILE__, array( 'Commerce\Client\Setup\Activator', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'Commerce\Client\Setup\Deactivator', 'deactivate' ) );
-register_uninstall_hook( __FILE__, array( 'Commerce\Client\Setup\Uninstaller', 'uninstall' ) );
+register_activation_hook( __FILE__, array( 'Commerce\Client\Config\Activator', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'Commerce\Client\Config\Deactivator', 'deactivate' ) );
+register_uninstall_hook( __FILE__, array( 'Commerce\Client\Config\Uninstaller', 'uninstall' ) );
 
 /**
  * Begins execution of the plugin.

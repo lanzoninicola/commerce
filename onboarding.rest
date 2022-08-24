@@ -35,10 +35,3 @@ content-type: application/json
 
 ### "installation_id": "3be6607b-0f40-11ed-9cce-040e3caabadb"
 
-###
-POST http://localhost/bb-melhor-envio/wp-json/commerce/v1/onboarding/2
-content-type: application/json
-
-{
-    "fullname": "Pippolo"
-}

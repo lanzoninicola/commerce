@@ -2,6 +2,8 @@
 
 namespace Commerce\App\Services;
 
+use function Commerce\get_plugin_text_domain;
+
 class AdminMenuService {
 
     /**
@@ -54,13 +56,13 @@ class AdminMenuService {
         'wp_icon'    => null,
     ) ) {
 
-        $page_title = $options['page_title'] ?? __( $label, COMMERCE_TEXT_DOMAIN );
+        $page_title = $options['page_title'] ?? __( $label, get_plugin_text_domain() );
         $capability = $options['capability'] ?? $this->default_capability;
         $icon       = $options['icon_url'] ?? $options['wp_icon'] ?? 'dashicons-admin-tools';
         $this->slug = $slug;
 
         add_menu_page(
-            __( $label, COMMERCE_TEXT_DOMAIN ),
+            __( $label, get_plugin_text_domain() ),
             $page_title,
             $capability,
             $slug,
@@ -76,13 +78,13 @@ class AdminMenuService {
         'position'   => null,
     ) ) {
 
-        $page_title = $options['page_title'] ?? __( $label, COMMERCE_TEXT_DOMAIN );
+        $page_title = $options['page_title'] ?? __( $label, get_plugin_text_domain() );
         $capability = $options['capability'] ?? $this->default_capability;
         $position   = $options['position'] ?? null;
 
         add_submenu_page(
             $parent_slug,
-            __( $label, COMMERCE_TEXT_DOMAIN ),
+            __( $label, get_plugin_text_domain() ),
             $page_title,
             $capability,
             $slug,
@@ -99,6 +101,8 @@ class AdminMenuService {
      * @return void
      */
     public function page_wrapper() {
+
+        do_action( "{$this->slug}_admin_page_render" );
 
         $html = sprintf( '<div id="%s"></div>', $this->slug );
         echo wp_kses_post( $html );

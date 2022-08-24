@@ -66,7 +66,7 @@ class AnalyticsRepository {
         ), );
 
         if ( $result instanceof DatabaseResponseError || $result instanceof DatabaseResponseEmpty ) {
-            return new Error( 'insert_product_installation_error', 'Error adding new product installation', $result->get_payload() );
+            return new Error( 'insert_product_installation_id_error', 'Error adding new product installation', $result->get_payload() );
         }
 
         return $result->get_payload();
@@ -82,8 +82,8 @@ class AnalyticsRepository {
             )
         );
 
-        if ( $result instanceof DatabaseResponseError || $result instanceof DatabaseResponseEmpty ) {
-            return new Error( 'find_by_installation_id_error', 'Error finding by installation id', $result->get_payload() );
+        if ( $result instanceof DatabaseResponseError ) {
+            return new Error( 'find_by_product_installation_id_error', 'Error finding by installation id', $result->get_payload() );
         }
 
         return $result->get_payload();

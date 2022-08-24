@@ -3,6 +3,7 @@
 namespace Commerce\Client\Config;
 
 use Commerce\Core\PluginSetup;
+use function Commerce\get_plugin_name;
 
 /**
  * Fired during plugin activation.
@@ -28,14 +29,14 @@ class Activator {
     public static function activate() {
 
         $plugin_setup = new PluginSetup(
-            COMMERCE_PLUGIN_NAME,
+            get_plugin_name(),
             COMMERCE_PLUGIN_DB_PREFIX,
             COMMERCE_PLUGIN_VERSION,
             COMMERCE_PLUGIN_ID
         );
 
         $tables = array(
-            'user_marketing_preferences'  => "CREATE TABLE `%table_name%` (
+            'user_marketing_preferences' => "CREATE TABLE `%table_name%` (
                 id INT NOT NULL AUTO_INCREMENT,
                 wp_user_id bigint(20) unsigned NOT NULL,
                 consent_newsletter TINYINT NULL,
@@ -45,7 +46,7 @@ class Activator {
                 updated_at datetime NULL,
                 PRIMARY KEY  (id)
                 ) %charset_collate%;",
-            'products'                    => "CREATE TABLE `%table_name%` (
+            'products'                   => "CREATE TABLE `%table_name%` (
                 id INT NOT NULL AUTO_INCREMENT,
                 name VARCHAR(255) NULL,
                 description VARCHAR(255) NULL,
@@ -53,7 +54,7 @@ class Activator {
                 updated_at datetime NULL,
                 PRIMARY KEY  (id)
                 ) %charset_collate%;",
-            'products_installations'      => "CREATE TABLE `%table_name%` (
+            'products_installations'     => "CREATE TABLE `%table_name%` (
                 id INT NOT NULL AUTO_INCREMENT,
                 product_id bigint(20) unsigned NOT NULL,
                 installation_id VARCHAR(255) NOT NULL,
@@ -65,23 +66,24 @@ class Activator {
                 updated_at datetime NULL,
                 PRIMARY KEY  (id)
                 ) %charset_collate%;",
-            'product_license'             => "CREATE TABLE `%table_name%` (
-                id INT NOT NULL AUTO_INCREMENT,
-                license_id BINARY(16) NOT NULL,
-                wp_user_id bigint(20) unsigned NOT NULL,
-                product_id bigint(20) unsigned NOT NULL,
-                created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
-                updated_at datetime NULL,
-                PRIMARY KEY  (id)
-                ) %charset_collate%;",
-            'product_license_activations' => "CREATE TABLE `%table_name%` (
-                id INT NOT NULL AUTO_INCREMENT,
-                license_id BINARY(16) NOT NULL,
-                site_url VARCHAR(255) NULL,
-                created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
-                updated_at datetime NULL,
-                PRIMARY KEY  (id)
-                ) %charset_collate%;",
+            // 'product_license'             => "CREATE TABLE `%table_name%` (
+            //     id INT NOT NULL AUTO_INCREMENT,
+            //     wp_user_id bigint(20) unsigned NOT NULL,
+            //     product_id bigint(20) unsigned NOT NULL,
+            //     license_id BINARY(16) NOT NULL,
+            //     seats INT NOT NULL,
+            //     created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
+            //     updated_at datetime NULL,
+            //     PRIMARY KEY  (id)
+            //     ) %charset_collate%;",
+            // 'product_license_activations' => "CREATE TABLE `%table_name%` (
+            //     id INT NOT NULL AUTO_INCREMENT,
+            //     license_id BINARY(16) NOT NULL,
+            //     site_url VARCHAR(255) NULL,
+            //     created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
+            //     updated_at datetime NULL,
+            //     PRIMARY KEY  (id)
+            //     ) %charset_collate%;",
         );
 
         $plugin_setup->define_db_schema( $tables );

@@ -2,8 +2,6 @@
 
 namespace Commerce\App\Traits;
 
-use Commerce\App\Common\Error;
-
 trait ValidatorTrait {
 
     /**

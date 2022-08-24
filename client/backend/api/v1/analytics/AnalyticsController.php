@@ -47,8 +47,8 @@ class AnalyticsController {
         if ( $result instanceof Error ) {
 
             return RestApiResponseError::error(
-                $result->get_error_message(),
-                $result->get_error_data()
+                $result->message(),
+                $result->data()
             );
         }
 
@@ -73,8 +73,8 @@ class AnalyticsController {
 
         if ( $result instanceof Error ) {
             return RestApiResponseError::error(
-                $result->get_error_message(),
-                $result->get_error_data()
+                $result->message(),
+                $result->data()
             );
         }
 

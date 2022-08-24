@@ -2,7 +2,10 @@
 
 namespace Commerce\Core;
 
+use Commerce\App\Services\Analytics\ProductActivationTracking;
 use Commerce\App\Services\Database\DatabaseHelpers;
+use function Commerce\get_plugin_db_prefix;
+use function Commerce\get_plugin_name;
 
 /**
  * Class responsible for the plugin setup.
@@ -11,34 +14,6 @@ use Commerce\App\Services\Database\DatabaseHelpers;
  * @method define_schema()
  */
 class PluginSetup {
-
-    /**
-     * The name of the plugin.
-     *
-     * @var string
-     */
-    protected $plugin_name;
-
-    /**
-     * The prefix to add to the plugin tables.
-     *
-     * @var string
-     */
-    protected $db_prefix;
-
-    /**
-     * The db version of the plugin.
-     *
-     * @var string
-     */
-    protected $db_version;
-
-    /**
-     * The id of the plugin.
-     *
-     * @var string
-     */
-    protected $plugin_id;
 
     /**
      * Array of SQL CREATE script that will be used
@@ -57,6 +32,7 @@ class PluginSetup {
 
     /**
      * The options to be saved in the database.
+     * Associative array with the name of the option as key and the value as value.
      *
      * @var array
      */
@@ -65,23 +41,42 @@ class PluginSetup {
     /**
      * Instanciate the object responsible for the setup.
      *
-     * @param string $plugin_name The name of the plugin. Costant defined in the plugin **[PLUGIN_NAME]_PLUGIN_NAME**.
-     * @param string $db_prefix The prefix to add to the plugin tables. Costant defined in the plugin **[PLUGIN_NAME]_DB_PREFIX**.
-     * @param string $db_version The db version of the plugin. Costant defined in the plugin **[PLUGIN_NAME]_PLUGIN_VERSION**.
-     * @param string $plugin_id The id of the plugin. Costant defined in the plugin **[PLUGIN_NAME]_PLUGIN_ID**.
      */
-    public function __construct( string $plugin_name, string $db_prefix, string $db_version, string $plugin_id ) {
+    public function __construct() {
 
-        $this->plugin_name = strtolower( $plugin_name );
-        $this->db_prefix   = $db_prefix;
-        $this->db_version  = $db_version;
-        $this->plugin_id   = $plugin_id;
+        $this->define_plugin_options();
 
+        $this->define_installation_id();
+
+    }
+
+    /**
+     * Define the plugin options.
+     * Save in the local array the options to be saved in the database.
+     *
+     * @return void
+     */
+    private function define_plugin_options() {
         $this->options = array(
-            'db_tables_prefix' => $this->db_prefix,
-            'db_version'       => $this->db_version,
-            'plugin_id'        => $this->plugin_id,
+            'db_tables_prefix'       => get_plugin_db_prefix(),
+            'is_activation_tracked'  => false,
+            'is_onboarding_required' => false,
         );
+    }
+
+    /**
+     * Define the installation id.
+     * Save in the local array the installation id option to be saved in the database.
+     *
+     * @return void
+     */
+    private function define_installation_id() {
+        $installation_id_option = (bool) get_option( get_plugin_name() . "_installation_id" );
+
+        if ( $installation_id_option === false ) {
+            $this->options['installation_id'] = DatabaseHelpers::generate_uuid();
+        }
+
     }
 
     /**
@@ -112,9 +107,9 @@ class PluginSetup {
 
         foreach ( $tables as $name => $sql ) {
 
-            $table_name = "{$wp_prefix}{$this->db_prefix}_{$name}";
+            $table_name = "{$wp_prefix}" . get_plugin_db_prefix() . "_{$name}";
 
-            $sql            = str_replace( '%table_name%', "{$wp_prefix}{$this->db_prefix}_{$name}", $sql );
+            $sql            = str_replace( '%table_name%', $table_name, $sql );
             $sql            = str_replace( '%charset_collate%', $charset_collate, $sql );
             $this->schema[] = $sql;
             $this->tables[] = $table_name;
@@ -130,7 +125,7 @@ class PluginSetup {
     public function add_options(): void {
 
         foreach ( $this->options as $option_name => $option_value ) {
-            add_option( "{$this->plugin_name}_{$option_name}", $option_value );
+            add_option( get_plugin_name() . "_{$option_name}", $option_value );
         }
 
     }
@@ -142,8 +137,8 @@ class PluginSetup {
      */
     public function remove_options(): void {
 
-        foreach ( $this->options as $option_name => $option_value ) {
-            delete_option( "{$this->plugin_name}_{$option_name}", $option_value );
+        foreach ( $this->options as $option_name => $_ ) {
+            delete_option( get_plugin_name() . "_{$option_name}" );
         }
 
     }
@@ -182,6 +177,9 @@ class PluginSetup {
     public function install(): array{
 
         $this->add_options();
+
+        ProductActivationTracking::send_activation_data();
+
         $result = $this->sync_db();
 
         return $result;

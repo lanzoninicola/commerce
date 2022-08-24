@@ -31,6 +31,8 @@ class DatabaseQuery implements DatabaseQueryInterface {
      * Use the identity operator (===) to check for errors: (e.g., false === $result),
      * and whether any rows were affected (e.g., 0 === $result).
      *
+     * If success then return the ID of the inserted row.
+     *
      * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      */
     public function insert_row( string $table_name, array $data, $format = null ): DatabaseResponse {
@@ -121,7 +123,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
      *
      * @param [type] $table_name
      * @param [type] $request - Data to insert
-     * @return void
+     * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      *
      * @example Usage
      * $table_name = 'table_name';
@@ -131,7 +133,7 @@ class DatabaseQuery implements DatabaseQueryInterface {
     );
     insert_multiple_rows( $table_name, $data );
      */
-    public function insert_multiple_rows( $table_name, $request ) {
+    public function insert_multiple_rows( $table_name, $request ): DatabaseResponse {
 
         if ( DatabaseHelpers::table_exists( $table_name ) === false ) {
             return new DatabaseResponseError( 'Table ' . $table_name . ' does not exist.' );
@@ -201,7 +203,13 @@ class DatabaseQuery implements DatabaseQueryInterface {
      *
      * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      */
-    public function update_row( string $table_name, array $data, array $where, array $data_format = array(), array $where_format = array() ): DatabaseResponse {
+    public function update_row(
+        string $table_name,
+        array $data,
+        array $where,
+        array $data_format = array(),
+        array $where_format = array()
+    ): DatabaseResponse {
 
         if ( DatabaseHelpers::table_exists( $table_name ) === false ) {
             return new DatabaseResponseError( 'Table ' . $table_name . ' does not exist.' );
@@ -443,6 +451,32 @@ class DatabaseQuery implements DatabaseQueryInterface {
 
         return new DatabaseResponseSuccess( 'All rows retrieved successfully.', $result );
 
+    }
+
+    /**
+     * Get the last record mutated. The last record mutated is the last record inserted or updated.
+     *
+     * The table name must have the created_at and updated_at columns.
+     *
+     * @param string $table_name
+     * @return DatabaseResponse
+     */
+    public function get_last_mutated_row( string $table_name ): DatabaseResponse {
+
+        $sql = 'SELECT *
+                FROM (
+                SELECT *,
+                CASE
+                    WHEN updated_at is not null THEN updated_at
+                    ELSE created_at
+                END as mutated_at
+                FROM ' . $table_name . ') t
+                ORDER BY mutated_at DESC
+                LIMIT 1';
+
+        $result = $this->query( $sql );
+
+        return $result;
     }
 
 }

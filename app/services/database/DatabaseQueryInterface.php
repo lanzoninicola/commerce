@@ -12,6 +12,8 @@ interface DatabaseQueryInterface {
      * Use the identity operator (===) to check for errors: (e.g., false === $result),
      * and whether any rows were affected (e.g., 0 === $result).
      *
+     * The payload is an associative array of key 'id' => the value of ID of new record insereted.
+     *
      * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      */
     public function insert_row( string $table_name, array $data, $format = null ): DatabaseResponse;
@@ -45,12 +47,16 @@ interface DatabaseQueryInterface {
     /**
      * Update a row.
      *
+     * The payload is NULL when successful.
+     *
      * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      */
     public function update_row( string $table_name, array $data, array $where, array $data_format, array $where_format ): DatabaseResponse;
 
     /**
      * Delete a row.
+     *
+     * The payload is NULL when successful.
      *
      * @return DatabaseResponse DatabaseResponseError|DatabaseResponseNotAffected|DatabaseResponseSuccess
      */
@@ -87,5 +93,15 @@ interface DatabaseQueryInterface {
      * @return DatabaseResponse DatabaseResponseError|DatabaseResponseEmpty|DatabaseResponseSuccess
      */
     public function select( string $table_name, array $conditions ): DatabaseResponse;
+
+    /**
+     * Get the last record mutated. The last record mutated is the last record inserted or updated.
+     *
+     * The table name must have the created_at and updated_at columns.
+     *
+     * @param string $table_name
+     * @return DatabaseResponse
+     */
+    public function get_last_mutated_row( string $table_name ): DatabaseResponse;
 
 }

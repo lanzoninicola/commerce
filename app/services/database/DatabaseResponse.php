@@ -68,8 +68,9 @@ class DatabaseResponse {
 
     /**
      * Return the payload of the response.
+     * The payload can be any type of data.
      *
-     * @return mixed
+     * @return array|null
      */
     public function get_payload() {
         return $this->payload;
