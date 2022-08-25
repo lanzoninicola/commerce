@@ -3,7 +3,6 @@
 namespace Commerce\Client\Config;
 
 use Commerce\Core\PluginSetup;
-use function Commerce\get_plugin_name;
 
 /**
  * Fired during plugin activation.
@@ -28,12 +27,7 @@ class Activator {
      */
     public static function activate() {
 
-        $plugin_setup = new PluginSetup(
-            get_plugin_name(),
-            COMMERCE_PLUGIN_DB_PREFIX,
-            COMMERCE_PLUGIN_VERSION,
-            COMMERCE_PLUGIN_ID
-        );
+        $plugin_setup = new PluginSetup();
 
         $tables = array(
             'user_marketing_preferences' => "CREATE TABLE `%table_name%` (
