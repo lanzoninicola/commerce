@@ -159,6 +159,16 @@ class Configurator implements PluginConfigurable {
                         'type'     => 'string',
                     ) )
             ),
+            new RestApiEndpoint( '/onboarding', 'GET',
+                array( OnboardingControllerFactory::create(), 'should_onboarding_required' ),
+                'public',
+                array(
+                    'email' => array(
+                        'required' => true,
+                        'type'     => 'string:email',
+                    ),
+                )
+            ),
             new RestApiEndpoint( '/account', 'GET',
                 array( AccountControllerFactory::create(), 'get_account' ),
                 'public',

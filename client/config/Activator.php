@@ -32,7 +32,7 @@ class Activator {
         $tables = array(
             'user_marketing_preferences' => "CREATE TABLE `%table_name%` (
                 id INT NOT NULL AUTO_INCREMENT,
-                wp_user_id bigint(20) unsigned NOT NULL,
+                user_email VARCHAR(255) NULL,
                 consent_newsletter TINYINT NULL,
                 consent_privacy TINYINT NULL,
                 consent_terms TINYINT NULL,
@@ -40,26 +40,25 @@ class Activator {
                 updated_at datetime NULL,
                 PRIMARY KEY  (id)
                 ) %charset_collate%;",
-            'products'                   => "CREATE TABLE `%table_name%` (
-                id INT NOT NULL AUTO_INCREMENT,
-                name VARCHAR(255) NULL,
-                description VARCHAR(255) NULL,
-                created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
-                updated_at datetime NULL,
-                PRIMARY KEY  (id)
-                ) %charset_collate%;",
             'products_installations'     => "CREATE TABLE `%table_name%` (
                 id INT NOT NULL AUTO_INCREMENT,
                 product_id bigint(20) unsigned NOT NULL,
-                installation_id VARCHAR(255) NOT NULL,
+                user_email VARCHAR(255) NULL,
                 site_url VARCHAR(255) NULL,
                 site_language VARCHAR(100) NULL,
                 site_timezone VARCHAR(100) NULL,
-                wp_user_id bigint(20) unsigned NULL,
                 created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
                 updated_at datetime NULL,
                 PRIMARY KEY  (id)
                 ) %charset_collate%;",
+            // 'products'                   => "CREATE TABLE `%table_name%` (
+            //     id INT NOT NULL AUTO_INCREMENT,
+            //     name VARCHAR(255) NULL,
+            //     description VARCHAR(255) NULL,
+            //     created_at datetime NULL DEFAULT CURRENT_TIMESTAMP,
+            //     updated_at datetime NULL,
+            //     PRIMARY KEY  (id)
+            //     ) %charset_collate%;",
             // 'product_license'             => "CREATE TABLE `%table_name%` (
             //     id INT NOT NULL AUTO_INCREMENT,
             //     wp_user_id bigint(20) unsigned NOT NULL,

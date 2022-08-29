@@ -4,6 +4,7 @@ namespace Commerce\Client\Backend\Api\V1\Onboarding;
 
 use Commerce\App\Common\Error;
 use Commerce\App\Common\Helpers;
+use Commerce\App\Services\Database\DatabaseResponseEmpty;
 
 class OnboardingService {
 
@@ -72,22 +73,9 @@ class OnboardingService {
             );
         }
 
-        $user_product_installation_id = $this->repository->match_product_installation_with_user(
-            $data['product_id'],
-            $data['installation_id'],
-            $wp_user_id
-        );
-
-        if ( Helpers::is_error( $user_product_installation_id ) ) {
-            return new Error(
-                'user_product_installation_insert_failed',
-                $user_product_installation_id->get_error_message(),
-                $user_product_installation_id->get_error_data()
-            );
-        }
-
+        /** insert the record in the table onboarding */
         $user_mkt_preference = $this->repository->add_user_marketing_preferences(
-            $wp_user_id,
+            $data['email'],
             $data['consent_newsletter'],
             $data['consent_terms'],
             $data['consent_privacy']
@@ -104,6 +92,32 @@ class OnboardingService {
 
         return $wp_user_id;
 
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $email
+     * @return Error | false if the onboarding is required, true if the user has already onboraded
+     */
+    public function should_onboarding_required( string $email ) {
+
+        $user_mkt_preference = $this->repository->get_user_marketing_preferences( $email );
+
+        if ( Helpers::is_error( $user_mkt_preference ) ) {
+
+            return new Error(
+                'get_onboarding_error',
+                $user_mkt_preference->get_error_message(),
+                $user_mkt_preference->get_error_data()
+            );
+        }
+
+        if ( $user_mkt_preference instanceof DatabaseResponseEmpty ) {
+            return true;
+        }
+
+        return false;
     }
 
 }

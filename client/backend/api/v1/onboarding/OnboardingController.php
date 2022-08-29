@@ -42,7 +42,7 @@ class OnboardingController {
      * Register a new onboarding request
      *
      * @param \WP_REST_Request $request
-     * @return void
+     * @return Error | \WP_REST_Response
      */
     public function new_onboarding( \WP_REST_Request $request ) {
 
@@ -64,6 +64,36 @@ class OnboardingController {
 
             'operation' => $operation,
             'payload'   => null,
+        ) );
+
+    }
+
+    /**
+     * Checking if the onboarding is required for the user
+     *
+     * @param \WP_REST_Request $request
+     * @return Error | \WP_REST_Response
+     */
+    public function should_onboarding_required( \WP_REST_Request $request ) {
+
+        $operation = 'Should onboarding required';
+
+        $request_params = $request->get_params();
+
+        $result = $this->service->should_onboarding_required( $request_params['email'] );
+
+        if ( $result instanceof Error ) {
+
+            return RestApiResponseError::error(
+                $result->message(),
+                $result->data()
+            );
+        }
+
+        return RestApiResponseSuccess::success( 'Onboarding success', array(
+
+            'operation' => $operation,
+            'payload'   => $result,
         ) );
 
     }
