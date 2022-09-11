@@ -150,14 +150,7 @@ class Configurator implements PluginConfigurable {
                         'required' => true,
                         'type'     => 'boolean',
                     ),
-                    'product_id'         => array(
-                        'required' => true,
-                        'type'     => 'integer',
-                    ),
-                    'installation_id'    => array(
-                        'required' => true,
-                        'type'     => 'string',
-                    ) )
+                )
             ),
             new RestApiEndpoint( '/onboarding', 'GET',
                 array( OnboardingControllerFactory::create(), 'should_onboarding_required' ),
